@@ -7,3 +7,84 @@ datasource db {
   url      = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
+
+enum UserRole {
+  Organizer
+  Customer
+}
+
+enum EventsCategory {
+  seminar
+  business
+  entertainments
+  food
+}
+
+enum Locations {
+  Bandung
+  Jakarta
+  Bogor
+  Depok
+  Tanggerang
+  Bekasi
+}
+
+model User {
+  id         String      @id @default(uuid())
+  username   String   @unique
+  email      String   @unique
+  password   String   @unique
+  avatar     String   @default("")
+  role       UserRole @default(Customer)
+  isVerify   Boolean  @default(false)
+  ref_code   String   @default("")
+  userPoints User_Point[]
+  Referral_Voucher Referral_Voucher[] 
+}
+
+model User_Point {
+  id          Int        @id @default(autoincrement())
+  points      Int        @default(1000)
+  created_at  DateTime   @default(now())
+  expires_at  DateTime  
+  User_Id     String        
+  user        User       @relation(fields: [User_Id], references: [id])
+}
+
+model Referral_Voucher {
+  id          Int        @id@default(autoincrement())
+  User_Id     String
+  created_at  DateTime   @default(now())
+  user        User       @relation(fields: [User_Id], references: [id])
+}
+
+model Venue {
+  name String    @unique
+  Map_URL       String    @unique
+  events        Events[]
+}
+
+model Events {
+  id          Int        @default(autoincrement())
+  title       String     @unique
+  slug        String     @unique
+  description String     @unique
+  category    EventsCategory
+  location    Locations
+  venue_name  String
+  date        DateTime
+  time
+  type
+  promotor
+  venue       Venue     @relation(fields: [venue_name], references: [name])  
+}
+
+model detail_transaction {
+  id         Int        @id@default(autoincrement()) 
+  ticket_Id  Int        
+  order_Id   Int        
+  event_Id   Int 
+  qty        Int        @default(1)
+  payment_proof String   @unique
+}
+
