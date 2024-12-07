@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start" : "npm run build && node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "dev": "ts-node-dev src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,7 +21,12 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
+    "@prisma/client": "^6.0.1",
+    "@types/pg": "^8.11.10",
     "cors": "^2.8.5",
-    "express": "^4.21.1"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.1",
+    "pg": "^8.13.1",
+    "prisma": "^6.0.1"
   }
 }

@@ -1,3 +1,9 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,19 +14,14 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-enum EventsCategory {
+enum EventCategory {
+  entertaiment
   seminar
   business
-  entertainments
   food
 }
 
-enum ticket_type {
-  paid
-  free
-}
-
-enum Locations {
+enum Location {
   Bandung
   Jakarta
   Bogor
@@ -29,103 +30,149 @@ enum Locations {
   Bekasi
 }
 
-enum transactionStatus {
-  pending
-  paid
-  canceled
+enum EventType {
+  Paid
+  Free
 }
 
-model User {
-  id               String             @id @default(uuid())
-  username         String             @unique
-  email            String             @unique
-  password         String             @unique
-  avatar           String             @default("")
-  isVerify         Boolean            @default(false)
-  ref_code         String             @default("")
-  userPoints       User_Point[]
-  Referral_Voucher Referral_Voucher[]
-  review           review[]
+enum TicketCategory {
+  Cat1
+  Cat2
+  VIP
+  festivalPass
 }
 
 model Promotor {
-  id       String   @id @default(uuid())
-  name     String   @unique
-  email    String   @unique
-  password String   @unique
-  avatar   String   @default("")
-  isVerify Boolean  @default(false)
-  event    Events[]
+  id       Int     @id @default(autoincrement())
+  name     String  @unique
+  email    String  @unique
+  password String
+  avatar   String
+  isVerify Boolean
+  event    Event[]
 }
 
-model User_Point {
-  id         Int      @id @default(autoincrement())
-  points     Int      @default(1000)
-  created_at DateTime @default(now())
-  expires_at DateTime
-  User_Id    String
-  user       User     @relation(fields: [User_Id], references: [id])
+enum TransactionStatus {
+  pending
+  Paid
+  canceled
 }
 
-model Referral_Voucher {
-  id         Int      @id @default(autoincrement())
-  User_Id    String
-  created_at DateTime @default(now())
-  user       User     @relation(fields: [User_Id], references: [id])
+model Event {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String
+  category    EventCategory
+  location    Location
+  venue       String
+  mapURL      String
+  date        DateTime
+  time        DateTime
+  type        EventType
+  promotorId  Int?
+
+  ticket            Ticket[]
+  DetailTransaction DetailTransaction[]
+  review            Review[]
+
+  Promotor Promotor? @relation(fields: [promotorId], references: [id])
 }
 
-model Venue {
-  name    String   @unique
-  Map_URL String   @unique
-  events  Events[]
-}
+model Ticket {
+  id       Int            @id @default(autoincrement())
+  eventId  Int
+  price    Int
+  category TicketCategory
+  quota    Int            @default(0)
 
-model Events {
-  id                 Int                  @id @default(autoincrement())
-  title              String               @unique
-  slug               String               @unique
-  description        String               @unique
-  category           EventsCategory
-  location           Locations
-  venue_name         String
-  date               DateTime
-  time               DateTime
-  type               ticket_type          @default(free)
-  promotor_id        String
-  promotor           Promotor             @relation(fields: [promotor_id], references: [id])
-  venue              Venue                @relation(fields: [venue_name], references: [name])
-  detail_transaction Detail_transaction[]
-  review             review[]
+  // ticketPrice       Transaction[] @relation(name:"ticketPrice")
+  Transaction       Transaction[]
+  DetailTransaction DetailTransaction[]
 
-  @@index([title, category, location])
-}
-
-model Detail_transaction {
-  id             Int         @id @default(autoincrement())
-  ticket_Id      Int
-  transaction_Id Int
-  event_Id       Int         @unique
-  qty            Int         @default(1)
-  payment_proof  String      @unique
-  event          Events      @relation(fields: [event_Id], references: [id])
-  transaction    Transaction @relation(fields: [transaction_Id], references: [id])
+  event       Event         @relation(fields: [eventId], references: [id])
 }
 
 model Transaction {
-  id                 Int                  @id @default(autoincrement())
-  total_price        Int
-  final_price        Int
-  status             transactionStatus    @default(pending)
-  user_id            String
-  detail_transaction Detail_transaction[]
+  id           Int               @id @default(autoincrement())
+  basePrice    Int
+  totalPrice   Int
+  finalPrice   Int
+  status       TransactionStatus @default(pending)
+  userId       String
+  userVoucher  Int?
+  userPoints   Int?
+  discount     Int?
+  ticketId     Int
+  paymentProof String
+  qty          Int
+  promoQuota   Int               @default(10)
+
+  DetailTransaction DetailTransaction[]
+  ticket            Ticket              @relation(fields: [ticketId], references: [id])
+  // price             Ticket              @relation(name: "TicketPrice", fields: [basePrice], references: [price])
+  user              User                @relation(fields: [userId], references: [id])
+  points            userPoints?          @relation(fields: [userPoints], references: [id])
+  voucher           referralVoucher?     @relation(fields: [userVoucher], references: [id])
 }
 
-model review {
-  id       Int    @id @default(autoincrement())
-  desc     String
-  rating   Int
-  user_Id  String
-  event_Id Int
-  event    Events @relation(fields: [event_Id], references: [id])
-  user     User   @relation(fields: [user_Id], references: [id])
+model DetailTransaction {
+  id            Int     @id @default(autoincrement())
+  transactionId Int
+  eventId       Int
+  ticketId      Int
+  reviewStatus  Boolean
+
+  review      Review[]
+  ticket      Ticket      @relation(fields: [ticketId], references: [id])
+  event       Event       @relation(fields: [eventId], references: [id])
+  transaction Transaction @relation(fields: [transactionId], references: [id])
+}
+
+model Review {
+  id            Int     @id @default(autoincrement())
+  desc          String?
+  rating        Int     @default(5)
+  userId        String
+  eventId       Int
+  transactionId Int
+
+  isValid DetailTransaction @relation(fields: [transactionId], references: [id])
+  event   Event             @relation(fields: [eventId], references: [id])
+  user    User              @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id       String  @id @default(uuid())
+  username String
+  email    String
+  password String
+  avatar   String  @default("https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg")
+  isVerify Boolean @default(false)
+  refCode  String
+
+  Transaction     Transaction[]
+  UserId          referralVoucher[] @relation
+  userPoints      userPoints[]
+  Review          Review[]
+}
+
+model referralVoucher {
+  id        Int       @id@default(autoincrement()) 
+  userId     String    @unique
+  createdAt  DateTime  @default(now())
+  expiresAt  DateTime
+
+  discount Transaction[]
+  user     User          @relation(fields: [userId], references: [id])
+}
+
+model userPoints {
+  id        Int      @id @default(autoincrement())
+  points    Int?     @default(10000)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  userId    String
+
+  discount Transaction[]
+  user     User          @relation(fields: [userId], references: [id])
 }
