@@ -69,6 +69,8 @@ model Event {
   date        DateTime
   time        DateTime
   type        EventType
+  thumbnail   String
+  slug        String        @unique
   promotorId  Int?
 
   ticket            Ticket[]
@@ -89,7 +91,7 @@ model Ticket {
   Transaction       Transaction[]
   DetailTransaction DetailTransaction[]
 
-  event       Event         @relation(fields: [eventId], references: [id])
+  event Event @relation(fields: [eventId], references: [id])
 }
 
 model Transaction {
@@ -111,8 +113,8 @@ model Transaction {
   ticket            Ticket              @relation(fields: [ticketId], references: [id])
   // price             Ticket              @relation(name: "TicketPrice", fields: [basePrice], references: [price])
   user              User                @relation(fields: [userId], references: [id])
-  points            userPoints?          @relation(fields: [userPoints], references: [id])
-  voucher           referralVoucher?     @relation(fields: [userVoucher], references: [id])
+  points            userPoints?         @relation(fields: [userPoints], references: [id])
+  voucher           referralVoucher?    @relation(fields: [userVoucher], references: [id])
 }
 
 model DetailTransaction {
@@ -150,17 +152,17 @@ model User {
   isVerify Boolean @default(false)
   refCode  String
 
-  Transaction     Transaction[]
-  UserId          referralVoucher[] @relation
-  userPoints      userPoints[]
-  Review          Review[]
+  Transaction Transaction[]
+  UserId      referralVoucher[] @relation
+  userPoints  userPoints[]
+  Review      Review[]
 }
 
 model referralVoucher {
-  id        Int       @id@default(autoincrement()) 
-  userId     String    @unique
-  createdAt  DateTime  @default(now())
-  expiresAt  DateTime
+  id        Int      @id @default(autoincrement())
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime
 
   discount Transaction[]
   user     User          @relation(fields: [userId], references: [id])
