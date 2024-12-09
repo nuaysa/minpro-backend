@@ -85,6 +85,7 @@ model Ticket {
   eventId  Int
   price    Int
   category TicketCategory
+  discount Boolean        @default(false)
   quota    Int            @default(0)
 
   // ticketPrice       Transaction[] @relation(name:"ticketPrice")
