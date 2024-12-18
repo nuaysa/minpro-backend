@@ -22,7 +22,7 @@ enum EventCategory {
   all 
 }
 
-enum Location {
+enum Locations {
   Bandung
   Jakarta
   Bogor
@@ -94,6 +94,17 @@ model Ticket {
   discount  Boolean        @default(false)
   quota     Int            @default(0)
 
+  Promotor Promotor? @relation(fields: [promotorId], references: [id])
+}
+
+model Ticket {
+  id       Int            @id @default(autoincrement())
+  eventId  Int
+  price    Int
+  category TicketCategory
+  quota    Int            @default(0)
+
+  // ticketPrice       Transaction[] @relation(name:"ticketPrice")
   Transaction       Transaction[]
   DetailTransaction DetailTransaction[]
 
