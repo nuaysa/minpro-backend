@@ -4,8 +4,8 @@ import { EventsRouter } from "./routers/events.router";
 import cookieParser from "cookie-parser";
 import { AuthRouter } from "./routers/auth.router";
 import { UserRouter } from "./routers/user.router";
-const PORT: number = 8000;
 
+const PORT: number = 8000;
 const app: Application = express();
 app.use(express.json());
 app.use(
@@ -30,6 +30,9 @@ app.use("/api/auth", authRouter.getRouter());
 
 app.get("/api", (req: Request, res: Response) => {
   res.status(200).send("if this text appear, your API is tunning");
+});
+app.post("/api", (req: Request, res: Response) => {
+  res.send("POST request received");
 });
 
 app.listen(PORT, () => {

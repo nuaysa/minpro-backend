@@ -21,6 +21,7 @@ export class UserController {
         take: +limit,
         skip: +limit * (+page - 1),
       });
+
       res.status(200).send({  total_page, page , users });
     } catch (err) {
       console.log(err);
