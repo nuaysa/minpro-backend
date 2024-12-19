@@ -10,15 +10,15 @@ const app: Application = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.BASE_URL_FE,
     credentials: true,
   })
 );
 app.use(cookieParser());
 
-app.get("/api", (req: Request, res: Response) => {
-  res.status(200).send("Welcome to my API");
-});
+app.get("/api", ( req : Request, res: Response ) => {
+  res.status(200).send("if this text appear, your API is tunning");
+})
 
 const userRouter = new UserRouter();
 const eventsRouter = new EventsRouter();

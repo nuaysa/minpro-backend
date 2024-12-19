@@ -1,0 +1,193 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum EventCategory {
+  entertainment
+  seminar
+  sport
+  food
+  all
+}
+
+enum Location {
+  Bandung
+  Jakarta
+  Bogor
+  Depok
+  Tanggerang
+  Bekasi
+}
+
+enum TransactionStatus {
+  pending
+  Paid
+  canceled
+}
+
+enum EventType {
+  Paid
+  Free
+}
+
+enum TicketCategory {
+  Cat1
+  Cat2
+  VIP
+  festivalPass
+  free
+}
+
+model Promotor {
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  email    String   @unique
+  password String
+  avatar   String
+  isVerify Boolean
+  event    Event[]
+  ticket   Ticket[]
+}
+
+model Event {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String        @db.Text
+  category    EventCategory
+  location    Location
+  venue       String
+  mapURL      String
+  date        DateTime      @db.Date
+  time        DateTime      @db.Time()
+  type        EventType
+  thumbnail   String
+  isActive    Boolean       @default(true)
+  slug        String        @unique
+  promotorId  Int
+
+  Promotor Promotor @relation(fields: [promotorId], references: [id])
+
+  ticket            Ticket[]
+  DetailTransaction DetailTransaction[]
+  review            Review[]
+}
+
+model Ticket {
+  id         Int            @id @default(autoincrement())
+  eventId    Int
+  price      Int
+  category   TicketCategory
+  startDate  DateTime       @default(now()) @db.Date
+  endDate    DateTime       @db.Date
+  isActive   Boolean        @default(true)
+  discount   Boolean        @default(false)
+  quota      Int            @default(0)
+  promotorId Int
+
+  Promotor Promotor @relation(fields: [promotorId], references: [id])
+  event    Event    @relation(fields: [eventId], references: [id])
+
+  transaction       Transaction[]
+  DetailTransaction DetailTransaction[]
+  review            Review[]
+}
+
+model Transaction {
+  id           Int               @id @default(autoincrement())
+  basePrice    Int
+  totalPrice   Int
+  finalPrice   Int
+  status       TransactionStatus @default(pending)
+  userId       String
+  userVoucher  Int?
+  userPoints   Int?
+  discount     Int?
+  ticketId     Int
+  paymentProof String
+  qty          Int
+  promoQuota   Int               @default(10)
+
+  DetailTransaction DetailTransaction[]
+  ticket            Ticket              @relation(fields: [ticketId], references: [id])
+  user              User                @relation(fields: [userId], references: [id])
+  points            userPoints?         @relation(fields: [userPoints], references: [id])
+  voucher           referralVoucher?    @relation(fields: [userVoucher], references: [id])
+}
+
+model DetailTransaction {
+  id            Int     @id @default(autoincrement())
+  transactionId Int
+  eventId       Int
+  ticketId      Int
+  reviewStatus  Boolean
+
+  review      Review[]
+  ticket      Ticket      @relation(fields: [ticketId], references: [id])
+  event       Event       @relation(fields: [eventId], references: [id])
+  transaction Transaction @relation(fields: [transactionId], references: [id])
+}
+
+model Review {
+  id            Int     @id @default(autoincrement())
+  desc          String?
+  rating        Int     @default(5)
+  userId        String
+  eventId       Int
+  transactionId Int
+  ticketId      Int?
+
+  isValid DetailTransaction @relation(fields: [transactionId], references: [id])
+  event   Event             @relation(fields: [eventId], references: [id])
+  user    User              @relation(fields: [userId], references: [id])
+  Ticket  Ticket?           @relation(fields: [ticketId], references: [id])
+}
+
+model User {
+  id          String  @id @default(uuid())
+  username    String
+  email       String
+  password    String
+  avatar      String  @default("https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg")
+  isVerify    Boolean @default(false)
+  refCode     String?
+  reffered_by String?
+
+  Transaction Transaction[]
+  UserId      referralVoucher[] @relation
+  userPoints  userPoints[]
+  Review      Review[]
+}
+
+model referralVoucher {
+  id        Int      @id @default(autoincrement())
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  discount Transaction[]
+  user     User          @relation(fields: [userId], references: [id])
+}
+
+model userPoints {
+  id        Int      @id @default(autoincrement())
+  points    Int?     @default(10000)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  userId    String
+
+  discount Transaction[]
+  user     User          @relation(fields: [userId], references: [id])
+}
