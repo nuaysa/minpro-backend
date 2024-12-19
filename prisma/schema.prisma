@@ -76,11 +76,11 @@ model Event {
   slug        String        @unique
   promotorId  Int
 
+  Promotor          Promotor @relation(fields: [promotorId], references: [id])
+
   ticket            Ticket[]
   DetailTransaction DetailTransaction[]
   review            Review[]
-
-  Promotor Promotor @relation(fields: [promotorId], references: [id])
 }
 
 model Ticket {
@@ -88,7 +88,7 @@ model Ticket {
   eventId   Int
   price     Int
   category  TicketCategory
-  startDate DateTime       @db.Date
+  startDate DateTime       @db.Date 
   endDate   DateTime       @db.Date
   isActive  Boolean        @default(true)
   discount  Boolean        @default(false)

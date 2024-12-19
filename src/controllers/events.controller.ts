@@ -74,7 +74,7 @@ export class EventsController {
       const { secure_url } = await cloudinaryUpload(req.file, "thumbnail");
       const { title, description, category, date, time, location, venue, mapURL, type} = req.body;
       const slug = createSlug(title)
-
+     
       await prisma.event.create({
         data: {
           title,
@@ -88,7 +88,7 @@ export class EventsController {
           type,
           slug: slug,
           thumbnail: secure_url,
-          promotorId: req.Promotor?.id!,
+          promotorId: req.Promotor?.id!
         },
       });
       res.status(200).send({ message: "event created !" });
