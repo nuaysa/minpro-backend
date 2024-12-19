@@ -88,7 +88,7 @@ export class EventsController {
           type,
           slug: slug,
           thumbnail: secure_url,
-          promotorId: req.Promotor?.id!,
+          promotorId: req.body.Promotor?.id!,
         },
       });
       res.status(200).send({ message: "event created !" });
@@ -107,12 +107,12 @@ export class EventsController {
         data: {
           eventId: eventId,
           price: price,
-          discount: discount,
+          // discount: discount,
           quota: quota,
-          startDate: startDate,
-          endDate: endDate,
+          // startDate: startDate,
+          // endDate: endDate,
           category: category,
-          isActive: status,
+          // isActive: status,
           event: {
             connect: {
               id: eventId,

@@ -4,10 +4,14 @@ import 'express'
 export type PromotorPayload = {
     id: number;
 }
+export type UserPayload = {
+    id: number;
+}
 
 declare global
 {namespace Express {
-    export interface Request {
+    export interface Request { 
+        user?: UserPayload;
         Promotor?: PromotorPayload;
         }
     }

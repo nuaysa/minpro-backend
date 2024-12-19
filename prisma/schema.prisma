@@ -22,7 +22,7 @@ enum EventCategory {
   all 
 }
 
-enum Locations {
+enum Location {
   Bandung
   Jakarta
   Bogor
@@ -81,20 +81,6 @@ model Event {
   review            Review[]
 
   Promotor Promotor @relation(fields: [promotorId], references: [id])
-}
-
-model Ticket {
-  id        Int            @id @default(autoincrement())
-  eventId   Int
-  price     Int
-  category  TicketCategory
-  startDate DateTime       @db.Date
-  endDate   DateTime       @db.Date
-  isActive  Boolean        @default(true)
-  discount  Boolean        @default(false)
-  quota     Int            @default(0)
-
-  Promotor Promotor? @relation(fields: [promotorId], references: [id])
 }
 
 model Ticket {
@@ -166,7 +152,7 @@ model User {
   password String
   avatar   String  @default("https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg")
   isVerify Boolean @default(false)
-  refCode  String
+  refCode  String?
   reffered_by String?
 
   Transaction Transaction[]
