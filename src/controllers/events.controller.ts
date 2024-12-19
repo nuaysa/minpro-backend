@@ -1,4 +1,4 @@
-import { EventCategory, Location, Prisma } from "@prisma/client";
+import { EventCategory, Location, Prisma } from "../../prisma/generated/client";
 import { Request, Response } from "express";
 import prisma from "../prisma";
 import { cloudinaryUpload } from "../services/cloudinary";
@@ -98,33 +98,33 @@ export class EventsController {
     }
   }
 
-  async createTicket(req: Request, res: Response) {
-    try {
-      const { eventId, price, category, discount, quota, startDate, endDate, isActive } = req.body;
+  // async createTicket(req: Request, res: Response) {
+  //   try {
+  //     const { eventId, price, category, discount, quota, startDate, endDate, isActive } = req.body;
 
-      const status = new Date(endDate) > new Date() ? true : false;
-      const ticket = await prisma.ticket.create({
-        data: {
-          eventId: eventId,
-          price: price,
-          discount: discount,
-          quota: quota,
-          startDate: startDate,
-          endDate: endDate,
-          category: category,
-          isActive: status,
-          event: {
-            connect: {
-              id: eventId,
-            },
-          },
-        },
-      });
+  //     const status = new Date(endDate) > new Date() ? true : false;
+  //     const ticket = await prisma.ticket.create({
+  //       data: {
+  //         eventId: eventId,
+  //         price: price,
+  //         discount: discount,
+  //         quota: quota,
+  //         startDate: startDate,
+  //         endDate: endDate,
+  //         category: category,
+  //         isActive: status,
+  //         event: {
+  //           connect: {
+  //             id: eventId,
+  //           },
+  //         },
+  //       },
+  //     });
 
-      res.status(200).send({ message: "ticket successfully added !" });
-    } catch (err) {
-      console.log(err);
-      res.status(400).send(err);
-    }
-  }
+  //     res.status(200).send({ message: "ticket successfully added !" });
+  //   } catch (err) {
+  //     console.log(err);
+  //     res.status(400).send(err);
+  //   }
+  // }
 }

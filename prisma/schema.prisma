@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output = "./generated/client"
 }
 
 datasource db {
@@ -89,8 +90,8 @@ model Ticket {
   eventId    Int
   price      Int
   category   TicketCategory
-  startDate  DateTime       @db.Date
-  endDate    DateTime       @db.Date
+  startDate  DateTime       @db.Date @default(now())
+  endDate    DateTime       @db.Date 
   isActive   Boolean        @default(true)
   discount   Boolean        @default(false)
   quota      Int            @default(0)
