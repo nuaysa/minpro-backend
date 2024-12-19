@@ -1,21 +1,54 @@
 import express, { Application, Request, Response } from "express";
+<<<<<<< HEAD
 import cors from "cors"
 import { EventsRouter } from "./routers/events.router";
+=======
+import cors from "cors";
+import { EventsRouter } from "./routers/events.router";
+import cookieParser from "cookie-parser";
+import { AuthRouter } from "./routers/auth.router";
+import { UserRouter } from "./routers/user.router";
+>>>>>>> 1a415eb6b3617b9f028d48452a640def2839da66
 
-const PORT: number = 8000
-
-const app : Application = express()
+const PORT: number = 8000;
+const app: Application = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 
+<<<<<<< HEAD
 const eventsRouter = new EventsRouter()
 
 app.use("/api/events", eventsRouter.getRouter())
 
 app.get("/api", ( req : Request, res: Response ) => {
     res.status(200).send("if this text appear, your API is tunning");
+=======
+app.get("/api", (req: Request, res: Response) => {
+  res.status(200).send("Welcome to my API");
+>>>>>>> 1a415eb6b3617b9f028d48452a640def2839da66
 });
 
-app.listen (PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+const userRouter = new UserRouter();
+const eventsRouter = new EventsRouter();
+const authRouter = new AuthRouter();
+
+app.use("/api/users", userRouter.getRouter());
+app.use("/api/events", eventsRouter.getRouter());
+app.use("/api/auth", authRouter.getRouter());
+
+app.get("/api", (req: Request, res: Response) => {
+  res.status(200).send("if this text appear, your API is tunning");
+});
+app.post("/api", (req: Request, res: Response) => {
+  res.send("POST request received");
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on => http://localhost:${PORT}/api`);
 });
