@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output = "./generated/client"
 }
 
 datasource db {
@@ -19,7 +20,7 @@ enum EventCategory {
   seminar
   sport
   food
-  all 
+  all
 }
 
 enum Location {
@@ -51,9 +52,9 @@ enum TicketCategory {
 }
 
 model Promotor {
-  id       Int     @id @default(autoincrement())
-  name     String  @unique
-  email    String  @unique
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  email    String   @unique
   password String
   avatar   String  @default("https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg")
   isVerify Boolean @default(false)
@@ -77,33 +78,32 @@ model Event {
   slug        String        @unique
   promotorId  Int
 
+  Promotor Promotor @relation(fields: [promotorId], references: [id])
+
   ticket            Ticket[]
   DetailTransaction DetailTransaction[]
   review            Review[]
-
-  Promotor Promotor @relation(fields: [promotorId], references: [id])
 }
 
 model Ticket {
-  id       Int            @id @default(autoincrement())
-  eventId  Int
-  price    Int
-  category TicketCategory
-  startDate DateTime @db.Date
-  endDate DateTime @db.Date
-  isActive Boolean @default(true)
-  discount Boolean @default(false)
-  quota    Int            @default(0)
+  id         Int            @id @default(autoincrement())
+  eventId    Int
+  price      Int
+  category   TicketCategory
+  startDate  DateTime       @db.Date @default(now())
+  endDate    DateTime       @db.Date 
+  isActive   Boolean        @default(true)
+  discount   Boolean        @default(false)
+  quota      Int            @default(0)
   promotorId Int
 
-  promotor Promotor @relation(fields: [promotorId], references: [id]) 
-  
-  // ticketPrice       Transaction[] @relation(name:"ticketPrice")
-  Transaction       Transaction[]
+  Promotor Promotor @relation(fields: [promotorId], references: [id])
+  event    Event    @relation(fields: [eventId], references: [id])
+
+  transaction       Transaction[]
   DetailTransaction DetailTransaction[]
-  
-  review Review[]
-  event Event @relation(fields: [eventId], references: [id])
+  review            Review[]
+
 }
 
 model Transaction {
@@ -117,9 +117,11 @@ model Transaction {
   userPoints   Int?
   discount     Int?
   ticketId     Int
-  paymentProof String
+  createdAt    DateTime         @default(now())
+  expiresAt    DateTime       
   qty          Int
   promoQuota   Int               @default(10)
+  redirect_url String?
 
   DetailTransaction DetailTransaction[]
   ticket            Ticket              @relation(fields: [ticketId], references: [id])
@@ -148,22 +150,22 @@ model Review {
   userId        String
   eventId       Int
   transactionId Int
-  ticketId Int?
+  ticketId      Int?
 
   isValid DetailTransaction @relation(fields: [transactionId], references: [id])
   event   Event             @relation(fields: [eventId], references: [id])
   user    User              @relation(fields: [userId], references: [id])
-  ticket Ticket?             @relation(fields: [ticketId], references: [id])
+  Ticket  Ticket?           @relation(fields: [ticketId], references: [id])
 }
 
 model User {
-  id       String  @id @default(uuid())
-  username String
-  email    String
-  password String
-  avatar   String  @default("https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg")
-  isVerify Boolean @default(false)
-  refCode  String?
+  id          String  @id @default(uuid())
+  username    String
+  email       String
+  password    String
+  avatar      String  @default("https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg")
+  isVerify    Boolean @default(false)
+  refCode     String?
   reffered_by String?
 
   Transaction Transaction[]
