@@ -116,9 +116,11 @@ model Transaction {
   userPoints   Int?
   discount     Int?
   ticketId     Int
-  paymentProof String
+  createdAt    DateTime          @default(now())
+  expiresAt    DateTime
   qty          Int
   promoQuota   Int               @default(10)
+  redirect_url String?
 
   DetailTransaction DetailTransaction[]
   ticket            Ticket              @relation(fields: [ticketId], references: [id])

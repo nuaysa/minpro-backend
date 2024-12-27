@@ -17,8 +17,8 @@ export class EventsController {
 
       if (category !== "all") {
         filter.category = { equals: category as EventCategory };
-      } else if(category == "all"){
-        filter.category = {}
+      } else if (category == "all") {
+        filter.category = {};
       }
 
       if (location) {
@@ -72,8 +72,16 @@ export class EventsController {
     try {
       if (!req.file) throw { message: "thumbnail empty" };
       const { secure_url } = await cloudinaryUpload(req.file, "thumbnail");
-      const { title, description, category, date, time, location, venue, mapURL, type} = req.body;
-      const slug = createSlug(title)
+      const { title, description, category, date, time, location, type, venue, mapURL, promotorId } = req.body;
+      const slug = createSlug(title);
+
+      const isPromotorExists = await prisma.promotor.findUnique({
+        where: { id: +promotorId },
+      });
+
+      if (!isPromotorExists) {
+        throw new Error("Promotor ID does not exist");
+      }
 
       await prisma.event.create({
         data: {
@@ -88,7 +96,8 @@ export class EventsController {
           type,
           slug: slug,
           thumbnail: secure_url,
-          promotorId: req.Promotor?.id!
+          promotorId: +promotorId,
+          // promotorId: req.Promotor?.id!
         },
       });
       res.status(200).send({ message: "event created !" });
@@ -97,34 +106,37 @@ export class EventsController {
       res.status(400).send(err);
     }
   }
+  async createTicket(req: Request, res: Response) {
+    try {
+      const { price, category, discount, quota, startDate, endDate, isActive, Promotor, eventId } = req.body;
+      const status = new Date(endDate) > new Date() ? true : false;
+      const parsedStartDate = new Date(`${startDate}T00:00:00.000Z`);
+      const parsedEndDate = new Date(`${endDate}T23:59:59.000Z`);
 
-  // async createTicket(req: Request, res: Response) {
-  //   try {
-  //     const { eventId, price, category, discount, quota, startDate, endDate, isActive } = req.body;
+      const ticket = await prisma.ticket.create({
+        data: {
+          price: price,
+          discount: discount,
+          quota: quota,
+          startDate: parsedStartDate,
+          endDate: parsedEndDate,
+          category: category,
+          isActive: status,
+          event: {
+            connect: {
+              id: eventId,
+            },
+          },
+          Promotor: {
+            connect: { id: Promotor }, 
+          },
+        },
+      });
 
-  //     const status = new Date(endDate) > new Date() ? true : false;
-  //     const ticket = await prisma.ticket.create({
-  //       data: {
-  //         eventId: eventId,
-  //         price: price,
-  //         discount: discount,
-  //         quota: quota,
-  //         startDate: startDate,
-  //         endDate: endDate,
-  //         category: category,
-  //         isActive: status,
-  //         event: {
-  //           connect: {
-  //             id: eventId,
-  //           },
-  //         },
-  //       },
-  //     });
-
-  //     res.status(200).send({ message: "ticket successfully added !" });
-  //   } catch (err) {
-  //     console.log(err);
-  //     res.status(400).send(err);
-  //   }
-  // }
+      res.status(200).send({ message: "ticket successfully added !" });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
 }
