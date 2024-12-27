@@ -12,10 +12,13 @@ export class AuthRouter {
     }
 
     private initializeRoutes(){
-        this.router.post("/", this.authController.registerUser)
-        // this.router.post("/login", this.authController.loginUser)
+        this.router.post("/registerUser", this.authController.registerUser)
+        this.router.post("/registerPromotor", this.authController.registerPromotor)
+        this.router.post("/loginUser", this.authController.loginUser)
+        this.router.post("/loginPromotor", this.authController.loginPromotor)
         
-     
+        this.router.patch("/verify/:token", this.authController.verifyUser)
+        this.router.patch("/verify/:token", this.authController.verifyPromotor)
     }
 
     getRouter(): Router {

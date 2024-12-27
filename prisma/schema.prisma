@@ -31,6 +31,12 @@ enum Location {
   Bekasi
 }
 
+enum TransactionStatus {
+  pending
+  Paid
+  canceled
+}
+
 enum EventType {
   Paid
   Free
@@ -49,15 +55,10 @@ model Promotor {
   name     String  @unique
   email    String  @unique
   password String
-  avatar   String
-  isVerify Boolean
+  avatar   String  @default("https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg")
+  isVerify Boolean @default(false)
   event    Event[]
-}
-
-enum TransactionStatus {
-  pending
-  Paid
-  canceled
+  ticket Ticket[]
 }
 
 model Event {
@@ -88,12 +89,20 @@ model Ticket {
   eventId  Int
   price    Int
   category TicketCategory
+  startDate DateTime @db.Date
+  endDate DateTime @db.Date
+  isActive Boolean @default(true)
+  discount Boolean @default(false)
   quota    Int            @default(0)
+  promotorId Int
 
+  promotor Promotor @relation(fields: [promotorId], references: [id]) 
+  
   // ticketPrice       Transaction[] @relation(name:"ticketPrice")
   Transaction       Transaction[]
   DetailTransaction DetailTransaction[]
-
+  
+  review Review[]
   event Event @relation(fields: [eventId], references: [id])
 }
 
@@ -139,10 +148,12 @@ model Review {
   userId        String
   eventId       Int
   transactionId Int
+  ticketId Int?
 
   isValid DetailTransaction @relation(fields: [transactionId], references: [id])
   event   Event             @relation(fields: [eventId], references: [id])
   user    User              @relation(fields: [userId], references: [id])
+  ticket Ticket?             @relation(fields: [ticketId], references: [id])
 }
 
 model User {
