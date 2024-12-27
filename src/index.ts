@@ -4,6 +4,7 @@ import { EventsRouter } from "./routers/events.router";
 import cookieParser from "cookie-parser";
 import { AuthRouter } from "./routers/auth.router";
 import { UserRouter } from "./routers/user.router";
+import { TransactionRouter } from "./routers/transaction.router";
 
 const PORT: number = 8000;
 const app: Application = express();
@@ -23,9 +24,11 @@ app.get("/api", ( req : Request, res: Response ) => {
 const userRouter = new UserRouter();
 const eventsRouter = new EventsRouter();
 const authRouter = new AuthRouter();
+const transactionRouter = new TransactionRouter();
 
 app.use("/api/users", userRouter.getRouter());
 app.use("/api/events", eventsRouter.getRouter());
+app.use("/api/transaction", authRouter.getRouter());
 app.use("/api/auth", authRouter.getRouter());
 
 app.get("/api", (req: Request, res: Response) => {

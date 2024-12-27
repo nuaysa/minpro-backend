@@ -30,6 +30,7 @@
   "dependencies": {
     "@prisma/client": "^6.0.1",
     "@types/pg": "^8.11.10",
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
