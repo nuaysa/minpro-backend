@@ -4,15 +4,20 @@ import { EventsRouter } from "./routers/events.router";
 import cookieParser from "cookie-parser";
 import { AuthRouter } from "./routers/auth.router";
 import { UserRouter } from "./routers/user.router";
+import { PromotorRouter } from "./routers/promotor.router";  
+import { verifikasiToken } from "./middlewares/verify";  
+import { verifyRole } from "./middlewares/verify";  
 import { TransactionRouter } from "./routers/transaction.router";
 
 const PORT: number = 8000;
 const app: Application = express();
+
 app.use(express.json());
 app.use(
   cors({
     origin: process.env.BASE_URL_FE,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
 );
 app.use(cookieParser());
@@ -24,18 +29,19 @@ app.get("/api", ( req : Request, res: Response ) => {
 const userRouter = new UserRouter();
 const eventsRouter = new EventsRouter();
 const authRouter = new AuthRouter();
+const promotorRouter = new PromotorRouter();  
 const transactionRouter = new TransactionRouter();
+
 
 app.use("/api/users", userRouter.getRouter());
 app.use("/api/events", eventsRouter.getRouter());
 app.use("/api/transaction", authRouter.getRouter());
 app.use("/api/auth", authRouter.getRouter());
+app.use("/api/promotor", promotorRouter.getRouter());  // Menambahkan rute untuk promotor
 
-app.get("/api", (req: Request, res: Response) => {
-  res.status(200).send("if this text appear, your API is tunning");
-});
 app.post("/api", (req: Request, res: Response) => {
   res.send("POST request received");
+  
 });
 
 app.listen(PORT, () => {
