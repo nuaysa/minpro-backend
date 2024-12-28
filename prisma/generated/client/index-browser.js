@@ -167,12 +167,19 @@ exports.Prisma.TransactionScalarFieldEnum = {
   userPoints: 'userPoints',
   discount: 'discount',
   ticketId: 'ticketId',
+<<<<<<< HEAD
+=======
+
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
   createdAt: 'createdAt',
   expiresAt: 'expiresAt',
   qty: 'qty',
   promoQuota: 'promoQuota',
   redirect_url: 'redirect_url'
+<<<<<<< HEAD
 };
+=======
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
 
 exports.Prisma.DetailTransactionScalarFieldEnum = {
   id: 'id',

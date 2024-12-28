@@ -5268,11 +5268,19 @@ export namespace Prisma {
     userPoints: number | null
     discount: number | null
     ticketId: number | null
+<<<<<<< HEAD
+=======
+
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
     createdAt: Date | null
     expiresAt: Date | null
     qty: number | null
     promoQuota: number | null
     redirect_url: string | null
+<<<<<<< HEAD
+=======
+
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
   }
 
   export type TransactionMaxAggregateOutputType = {
@@ -5491,6 +5499,10 @@ export namespace Prisma {
     userPoints: number | null
     discount: number | null
     ticketId: number
+<<<<<<< HEAD
+=======
+
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
     createdAt: Date
     expiresAt: Date
     qty: number
@@ -5552,6 +5564,10 @@ export namespace Prisma {
     userPoints?: boolean
     discount?: boolean
     ticketId?: boolean
+<<<<<<< HEAD
+=======
+
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
     createdAt?: boolean
     expiresAt?: boolean
     qty?: boolean
@@ -13747,6 +13763,10 @@ export namespace Prisma {
     userPoints?: SortOrder
     discount?: SortOrder
     ticketId?: SortOrder
+<<<<<<< HEAD
+=======
+
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
     createdAt?: SortOrder
     expiresAt?: SortOrder
     qty?: SortOrder
@@ -13828,7 +13848,10 @@ export namespace Prisma {
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
   export type TransactionScalarRelationFilter = {
     is?: TransactionWhereInput
     isNot?: TransactionWhereInput
@@ -14507,11 +14530,17 @@ export namespace Prisma {
     multiply?: number
     divide?: number
   }
+<<<<<<< HEAD
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
 
+=======
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
   export type DetailTransactionUpdateManyWithoutTransactionNestedInput = {
     create?: XOR<DetailTransactionCreateWithoutTransactionInput, DetailTransactionUncheckedCreateWithoutTransactionInput> | DetailTransactionCreateWithoutTransactionInput[] | DetailTransactionUncheckedCreateWithoutTransactionInput[]
     connectOrCreate?: DetailTransactionCreateOrConnectWithoutTransactionInput | DetailTransactionCreateOrConnectWithoutTransactionInput[]
@@ -15191,6 +15220,10 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -16796,6 +16829,10 @@ export namespace Prisma {
     finalPrice: number
     status?: $Enums.TransactionStatus
     discount?: number | null
+<<<<<<< HEAD
+=======
+
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
     createdAt?: Date | string
     expiresAt: Date | string
     qty: number

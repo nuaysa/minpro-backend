@@ -122,6 +122,10 @@ model Transaction {
   promoQuota   Int               @default(10)
   redirect_url String?
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
   DetailTransaction DetailTransaction[]
   ticket            Ticket              @relation(fields: [ticketId], references: [id])
   user              User                @relation(fields: [userId], references: [id])

@@ -1,4 +1,8 @@
 {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 86a465382dd362a0e65e14019e447344695382d4
   "name": "prisma-client-08d97861e503cd7da077dd4dfa336afa75e1d42215593810fd726073a53e9c3e",
   "main": "index.js",
   "types": "index.d.ts",

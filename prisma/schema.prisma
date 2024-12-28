@@ -1,12 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output = "./generated/client"
+  output   = "./generated/client"
 }
 
 datasource db {
@@ -56,8 +50,8 @@ model Promotor {
   name     String   @unique
   email    String   @unique
   password String
-  avatar   String
-  isVerify Boolean
+  avatar   String   @default("https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg")
+  isVerify Boolean  @default(false)
   event    Event[]
   ticket   Ticket[]
 }
@@ -90,8 +84,8 @@ model Ticket {
   eventId    Int
   price      Int
   category   TicketCategory
-  startDate  DateTime       @db.Date @default(now())
-  endDate    DateTime       @db.Date 
+  startDate  DateTime       @default(now()) @db.Date
+  endDate    DateTime       @db.Date
   isActive   Boolean        @default(true)
   discount   Boolean        @default(false)
   quota      Int            @default(0)
@@ -116,8 +110,8 @@ model Transaction {
   userPoints   Int?
   discount     Int?
   ticketId     Int
-  createdAt    DateTime         @default(now())
-  expiresAt    DateTime       
+  createdAt    DateTime          @default(now())
+  expiresAt    DateTime
   qty          Int
   promoQuota   Int               @default(10)
   redirect_url String?
