@@ -121,7 +121,6 @@ model Transaction {
   qty          Int
   promoQuota   Int               @default(10)
   redirect_url String?
-
   DetailTransaction DetailTransaction[]
   ticket            Ticket              @relation(fields: [ticketId], references: [id])
   user              User                @relation(fields: [userId], references: [id])

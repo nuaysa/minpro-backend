@@ -9,14 +9,31 @@ export const verifikasiToken = async (
 ) => {
   try {
     const token = req.header("Authorization")?.replace("Bearer ", "");
+    console.log(token);
+
     if (!token) throw { message: "Unauthorize!" };
 
-    const verified = verify(token, process.env.JWT_KEY!);
+    const verified = verify(token, "shhhhh");
+    console.log(verified);
+    
     req.user = verified as UserPayload;
 
     next();
   } catch (err) {
-    console.log(err); 
+    console.log(err);
     res.status(400).send(err);
   }
+};
+
+export const verifyRole = (role: string) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
+    const user = req.user as UserPayload;
+
+    if (!user || user.role !== role) {
+      res.status(403).json({ message: "Access denied, insufficient role" });
+      return;
+    }
+
+    next();
+  };
 };

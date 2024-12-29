@@ -132,11 +132,4 @@ export class EventsController {
           },
         },
       });
-
-      res.status(200).send({ message: "ticket successfully added !" });
-    } catch (err) {
-      console.log(err);
-      res.status(400).send(err);
-    }
-  }
 }

@@ -8,11 +8,13 @@ import { TransactionRouter } from "./routers/transaction.router";
 
 const PORT: number = 8000;
 const app: Application = express();
+
 app.use(express.json());
 app.use(
   cors({
     origin: process.env.BASE_URL_FE,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
 );
 app.use(cookieParser());
@@ -29,13 +31,13 @@ const transactionRouter = new TransactionRouter();
 app.use("/api/users", userRouter.getRouter());
 app.use("/api/events", eventsRouter.getRouter());
 app.use("/api/transaction", transactionRouter.getRouter());
-app.use("/api/auth", authRouter.getRouter());
 
-app.get("/api", (req: Request, res: Response) => {
-  res.status(200).send("if this text appear, your API is tunning");
-});
+app.use("/api/auth", authRouter.getRouter());
+app.use("/api/promotor", promotorRouter.getRouter());  // Menambahkan rute untuk promotor
+
 app.post("/api", (req: Request, res: Response) => {
   res.send("POST request received");
+  
 });
 
 app.listen(PORT, () => {

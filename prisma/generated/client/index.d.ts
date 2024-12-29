@@ -13828,7 +13828,6 @@ export namespace Prisma {
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
-
   export type TransactionScalarRelationFilter = {
     is?: TransactionWhereInput
     isNot?: TransactionWhereInput

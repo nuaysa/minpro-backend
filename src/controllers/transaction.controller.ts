@@ -1,3 +1,4 @@
+
 import { Request, Response } from "express";
 import prisma from "../prisma";
 import axios from "axios";
@@ -67,6 +68,7 @@ export class TransactionController {
         },
       });
 
+
       await prisma.transaction.update({
         data: { redirect_url: data.redirect_url },
         where: { id: order.id },
@@ -98,6 +100,4 @@ export class TransactionController {
       res.status(400).send(err);
     }
   }
-
-
 }

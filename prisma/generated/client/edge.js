@@ -145,6 +145,7 @@ exports.Prisma.TransactionScalarFieldEnum = {
   redirect_url: 'redirect_url'
 };
 
+
 exports.Prisma.DetailTransactionScalarFieldEnum = {
   id: 'id',
   transactionId: 'transactionId',
