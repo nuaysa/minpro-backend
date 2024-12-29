@@ -1,5 +1,4 @@
 
-import { Prisma } from "../../prisma/generated/client";
 import { Request, Response } from "express";
 import prisma from "../prisma";
 import axios from "axios";
@@ -7,34 +6,53 @@ import axios from "axios";
 export class TransactionController {
   async createOrder(req: Request, res: Response) {
     try {
-      const { id, basePrice, userVoucher, userPoints, discount, qty } = req.body;
+      const { id, basePrice, userVoucher, userPoints, qty, userId } = req.body;
       const { ticketId } = req.params;
-      const expiredAt = new Date(new Date().getTime() + 10 * 60 * 1000)
-     const totalPrice = basePrice * qty
-     const finalPrice = totalPrice - ( discount? (totalPrice * discount) / 100 : 0);
+      var discount: number = 0;
+      const expiredAt = new Date(new Date().getTime() + 10 * 60 * 1000);
+      const TotalPrice = basePrice * qty;
+      
+      function formatId(id: number): string {
+        return id.toString().padStart(3, '0');
+      }
 
-      const order = await prisma.transaction.create({
-        data: { 
-          userId: req.user?.id.toString()!, 
-          expiresAt: expiredAt, 
-          basePrice,
-          userVoucher,
-          userPoints,
-          totalPrice: totalPrice,
-          finalPrice: finalPrice,
-          qty,
-          ticketId: +ticketId,
-        },
-      });
+      async function promo() {
+        if(userPoints){
+          if(TotalPrice < userPoints){
+          return res.status(400).send({message: "Points can not be used"})
+        
+        }else{ 
 
-      if (!req.user) {
-        return res.status(401).send({ message: "Unauthorized" });
+          const discountData = await prisma.userPoints.findUnique({
+          where: { userId: userId },
+          select: { points: true },
+        });
+        discount = discountData?.points || 0
+        await prisma.userPoints.update({
+            where: { 
+              userId: userId },
+              data: { points: userPoints - discount <= 0 ? 0 : userPoints - discount}
+            })
+        }
+      }
+        
+        if(userVoucher){
+          const voucher = await prisma.referralVoucher.update({ where: { id: userVoucher }, data: { expiresAt : new Date() } })
+          discount = 10/100* TotalPrice
+        }
       }
       
+      await promo()
+      
+    const FinalPrice = TotalPrice - (discount ? discount : 0);
 
+      const order = await prisma.transaction.create({
+        data: { id, basePrice, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId},
+      });
+      // userId: req.user?.id.toString()!
       const body = {
         transaction_details: {
-          order_id: order.id,
+          order_id: `invoice ${formatId(order.id)}`,
           gross_amount: order.finalPrice,
         },
         expiry: {
@@ -43,16 +61,13 @@ export class TransactionController {
         },
       };
 
-      const { data } = await axios.post(
-        "https://app.sandbox.midtrans.com/snap/v1/transactions",
-        body,
-        {
-          headers: {
-            Authorization:
-              "U0ItTWlkLXNlcnZlci1OYW5sNVZZczQ5VF9JX1YyQXpabHBSVkg6",
-          },
-        }
-      );
+      const { data } = await axios.post("https://app.sandbox.midtrans.com/snap/v1/transactions",
+        body, {
+        headers: {
+          Authorization: "Basic U0ItTWlkLXNlcnZlci1OYW5sNVZZczQ5VF9JX1YyQXpabHBSVkg6",
+        },
+      });
+
 
       await prisma.transaction.update({
         data: { redirect_url: data.redirect_url },

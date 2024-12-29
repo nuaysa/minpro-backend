@@ -5268,13 +5268,11 @@ export namespace Prisma {
     userPoints: number | null
     discount: number | null
     ticketId: number | null
-
     createdAt: Date | null
     expiresAt: Date | null
     qty: number | null
     promoQuota: number | null
     redirect_url: string | null
-
   }
 
   export type TransactionMaxAggregateOutputType = {
@@ -5493,7 +5491,6 @@ export namespace Prisma {
     userPoints: number | null
     discount: number | null
     ticketId: number
-
     createdAt: Date
     expiresAt: Date
     qty: number
@@ -5555,7 +5552,6 @@ export namespace Prisma {
     userPoints?: boolean
     discount?: boolean
     ticketId?: boolean
-
     createdAt?: boolean
     expiresAt?: boolean
     qty?: boolean
@@ -10685,7 +10681,7 @@ export namespace Prisma {
 
   export type UserPointsGroupByOutputType = {
     id: number
-    points: number | null
+    points: number
     expiresAt: Date
     createdAt: Date
     userId: string
@@ -10755,7 +10751,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      points: number | null
+      points: number
       expiresAt: Date
       createdAt: Date
       userId: string
@@ -12488,7 +12484,7 @@ export namespace Prisma {
     OR?: userPointsWhereInput[]
     NOT?: userPointsWhereInput | userPointsWhereInput[]
     id?: IntFilter<"userPoints"> | number
-    points?: IntNullableFilter<"userPoints"> | number | null
+    points?: IntFilter<"userPoints"> | number
     expiresAt?: DateTimeFilter<"userPoints"> | Date | string
     createdAt?: DateTimeFilter<"userPoints"> | Date | string
     userId?: StringFilter<"userPoints"> | string
@@ -12498,7 +12494,7 @@ export namespace Prisma {
 
   export type userPointsOrderByWithRelationInput = {
     id?: SortOrder
-    points?: SortOrderInput | SortOrder
+    points?: SortOrder
     expiresAt?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
@@ -12508,20 +12504,20 @@ export namespace Prisma {
 
   export type userPointsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    userId?: string
     AND?: userPointsWhereInput | userPointsWhereInput[]
     OR?: userPointsWhereInput[]
     NOT?: userPointsWhereInput | userPointsWhereInput[]
-    points?: IntNullableFilter<"userPoints"> | number | null
+    points?: IntFilter<"userPoints"> | number
     expiresAt?: DateTimeFilter<"userPoints"> | Date | string
     createdAt?: DateTimeFilter<"userPoints"> | Date | string
-    userId?: StringFilter<"userPoints"> | string
     discount?: TransactionListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "userId">
 
   export type userPointsOrderByWithAggregationInput = {
     id?: SortOrder
-    points?: SortOrderInput | SortOrder
+    points?: SortOrder
     expiresAt?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
@@ -12537,7 +12533,7 @@ export namespace Prisma {
     OR?: userPointsScalarWhereWithAggregatesInput[]
     NOT?: userPointsScalarWhereWithAggregatesInput | userPointsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"userPoints"> | number
-    points?: IntNullableWithAggregatesFilter<"userPoints"> | number | null
+    points?: IntWithAggregatesFilter<"userPoints"> | number
     expiresAt?: DateTimeWithAggregatesFilter<"userPoints"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"userPoints"> | Date | string
     userId?: StringWithAggregatesFilter<"userPoints"> | string
@@ -13219,7 +13215,7 @@ export namespace Prisma {
   }
 
   export type userPointsCreateInput = {
-    points?: number | null
+    points?: number
     expiresAt: Date | string
     createdAt?: Date | string
     discount?: TransactionCreateNestedManyWithoutPointsInput
@@ -13228,7 +13224,7 @@ export namespace Prisma {
 
   export type userPointsUncheckedCreateInput = {
     id?: number
-    points?: number | null
+    points?: number
     expiresAt: Date | string
     createdAt?: Date | string
     userId: string
@@ -13236,7 +13232,7 @@ export namespace Prisma {
   }
 
   export type userPointsUpdateInput = {
-    points?: NullableIntFieldUpdateOperationsInput | number | null
+    points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: TransactionUpdateManyWithoutPointsNestedInput
@@ -13245,7 +13241,7 @@ export namespace Prisma {
 
   export type userPointsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    points?: NullableIntFieldUpdateOperationsInput | number | null
+    points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -13254,21 +13250,21 @@ export namespace Prisma {
 
   export type userPointsCreateManyInput = {
     id?: number
-    points?: number | null
+    points?: number
     expiresAt: Date | string
     createdAt?: Date | string
     userId: string
   }
 
   export type userPointsUpdateManyMutationInput = {
-    points?: NullableIntFieldUpdateOperationsInput | number | null
+    points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type userPointsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    points?: NullableIntFieldUpdateOperationsInput | number | null
+    points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -13751,7 +13747,6 @@ export namespace Prisma {
     userPoints?: SortOrder
     discount?: SortOrder
     ticketId?: SortOrder
-
     createdAt?: SortOrder
     expiresAt?: SortOrder
     qty?: SortOrder
@@ -14511,9 +14506,11 @@ export namespace Prisma {
     multiply?: number
     divide?: number
   }
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
+
   export type DetailTransactionUpdateManyWithoutTransactionNestedInput = {
     create?: XOR<DetailTransactionCreateWithoutTransactionInput, DetailTransactionUncheckedCreateWithoutTransactionInput> | DetailTransactionCreateWithoutTransactionInput[] | DetailTransactionUncheckedCreateWithoutTransactionInput[]
     connectOrCreate?: DetailTransactionCreateOrConnectWithoutTransactionInput | DetailTransactionCreateOrConnectWithoutTransactionInput[]
@@ -15192,7 +15189,6 @@ export namespace Prisma {
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
-
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
@@ -16036,7 +16032,7 @@ export namespace Prisma {
   }
 
   export type userPointsCreateWithoutDiscountInput = {
-    points?: number | null
+    points?: number
     expiresAt: Date | string
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutUserPointsInput
@@ -16044,7 +16040,7 @@ export namespace Prisma {
 
   export type userPointsUncheckedCreateWithoutDiscountInput = {
     id?: number
-    points?: number | null
+    points?: number
     expiresAt: Date | string
     createdAt?: Date | string
     userId: string
@@ -16180,7 +16176,7 @@ export namespace Prisma {
   }
 
   export type userPointsUpdateWithoutDiscountInput = {
-    points?: NullableIntFieldUpdateOperationsInput | number | null
+    points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutUserPointsNestedInput
@@ -16188,7 +16184,7 @@ export namespace Prisma {
 
   export type userPointsUncheckedUpdateWithoutDiscountInput = {
     id?: IntFieldUpdateOperationsInput | number
-    points?: NullableIntFieldUpdateOperationsInput | number | null
+    points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -16799,7 +16795,6 @@ export namespace Prisma {
     finalPrice: number
     status?: $Enums.TransactionStatus
     discount?: number | null
-
     createdAt?: Date | string
     expiresAt: Date | string
     qty: number
@@ -16863,7 +16858,7 @@ export namespace Prisma {
   }
 
   export type userPointsCreateWithoutUserInput = {
-    points?: number | null
+    points?: number
     expiresAt: Date | string
     createdAt?: Date | string
     discount?: TransactionCreateNestedManyWithoutPointsInput
@@ -16871,7 +16866,7 @@ export namespace Prisma {
 
   export type userPointsUncheckedCreateWithoutUserInput = {
     id?: number
-    points?: number | null
+    points?: number
     expiresAt: Date | string
     createdAt?: Date | string
     discount?: TransactionUncheckedCreateNestedManyWithoutPointsInput
@@ -16977,7 +16972,7 @@ export namespace Prisma {
     OR?: userPointsScalarWhereInput[]
     NOT?: userPointsScalarWhereInput | userPointsScalarWhereInput[]
     id?: IntFilter<"userPoints"> | number
-    points?: IntNullableFilter<"userPoints"> | number | null
+    points?: IntFilter<"userPoints"> | number
     expiresAt?: DateTimeFilter<"userPoints"> | Date | string
     createdAt?: DateTimeFilter<"userPoints"> | Date | string
     userId?: StringFilter<"userPoints"> | string
@@ -17726,7 +17721,7 @@ export namespace Prisma {
 
   export type userPointsCreateManyUserInput = {
     id?: number
-    points?: number | null
+    points?: number
     expiresAt: Date | string
     createdAt?: Date | string
   }
@@ -17812,7 +17807,7 @@ export namespace Prisma {
   }
 
   export type userPointsUpdateWithoutUserInput = {
-    points?: NullableIntFieldUpdateOperationsInput | number | null
+    points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: TransactionUpdateManyWithoutPointsNestedInput
@@ -17820,7 +17815,7 @@ export namespace Prisma {
 
   export type userPointsUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
-    points?: NullableIntFieldUpdateOperationsInput | number | null
+    points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: TransactionUncheckedUpdateManyWithoutPointsNestedInput
@@ -17828,7 +17823,7 @@ export namespace Prisma {
 
   export type userPointsUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
-    points?: NullableIntFieldUpdateOperationsInput | number | null
+    points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

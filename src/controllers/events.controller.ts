@@ -96,7 +96,6 @@ export class EventsController {
           type,
           slug: slug,
           thumbnail: secure_url,
-
           promotorId: +promotorId,
           // promotorId: req.Promotor?.id!
         },
@@ -107,7 +106,6 @@ export class EventsController {
       res.status(400).send(err);
     }
   }
-
   async createTicket(req: Request, res: Response) {
     try {
       const { price, category, discount, quota, startDate, endDate, isActive, Promotor, eventId } = req.body;
