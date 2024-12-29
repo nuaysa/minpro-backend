@@ -185,10 +185,10 @@ model referralVoucher {
 
 model userPoints {
   id        Int      @id @default(autoincrement())
-  points    Int?     @default(10000)
+  points    Int     @default(10000)
   expiresAt DateTime
   createdAt DateTime @default(now())
-  userId    String
+  userId    String  @unique
 
   discount Transaction[]
   user     User          @relation(fields: [userId], references: [id])

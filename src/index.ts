@@ -28,7 +28,7 @@ const transactionRouter = new TransactionRouter();
 
 app.use("/api/users", userRouter.getRouter());
 app.use("/api/events", eventsRouter.getRouter());
-app.use("/api/transaction", authRouter.getRouter());
+app.use("/api/transaction", transactionRouter.getRouter());
 app.use("/api/auth", authRouter.getRouter());
 
 app.get("/api", (req: Request, res: Response) => {
