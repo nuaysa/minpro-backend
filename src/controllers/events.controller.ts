@@ -19,6 +19,8 @@ export class EventsController {
         filter.category = { equals: category as EventCategory };
       } else if (category == "all") {
         filter.category = {};
+      } else if (category == "all") {
+        filter.category = {};
       }
 
       if (location) {
@@ -28,14 +30,23 @@ export class EventsController {
       const countEvents = await prisma.user.aggregate({ _count: { _all: true } });
       const totalPage = Math.ceil(countEvents._count._all / +limit);
 
+
       const events = await prisma.event.findMany({
-        where: filter,
+        where: filter && { isActive: true},  
         include: { ticket: true, Promotor: true },
         orderBy: { id: "asc" },
         take: +limit,
         skip: +limit * (+page - 1),
       });
-      res.status(200).send({ events });
+
+      if(new Date().getTime() === new Date(events[0].date).getTime() + 2 * 24 * 60 * 60 * 1000){
+        await prisma.event.updateMany({
+          where: { id: events[0].id },
+          data: { isActive: false },
+        });
+      }
+      
+        res.status(200).send({ events });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
@@ -96,8 +107,7 @@ export class EventsController {
           type,
           slug: slug,
           thumbnail: secure_url,
-          promotorId: +promotorId,
-          // promotorId: req.Promotor?.id!
+          promotorId: req.Promotor?.id!
         },
       });
       res.status(200).send({ message: "event created !" });
@@ -132,11 +142,8 @@ export class EventsController {
           },
         },
       });
-
-      res.status(200).send({ message: "ticket successfully added !" });
-    } catch (err) {
-      console.log(err);
-      res.status(400).send(err);
-    }
-  }
+} catch(err) {
+  console.log(err)
+  res.status(400).send(err)
 }
+  }}

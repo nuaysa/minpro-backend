@@ -1,5 +1,4 @@
-import { RoleUser } from "../prisma/generated/client";
-import 'express'
+import { RoleUser } from "../prisma/generated/client"; // Import RoleUser jika diperlukan
 
 export type PromotorPayload = {
     id: number;
@@ -7,13 +6,14 @@ export type PromotorPayload = {
 
 export type UserPayload = {
     id: number;
-}
+    role: RoleUser; 
+};
 
-declare global
-{namespace Express {
-    export interface Request { 
-        user?: UserPayload;
-        Promotor?: PromotorPayload;
+declare global {
+    namespace Express {
+        export interface Request {
+            user?: UserPayload;
+            Promotor?: PromotorPayload; 
         }
     }
 }

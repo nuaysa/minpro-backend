@@ -4,16 +4,14 @@ import prisma from "src/prisma";
 export class ReviewControllers {
     async CreateReview(req: Request, res: Response){
         try{
-            const { review, desc, rating, transactionId } = req.body;
+            const { desc, rating, transactionId } = req.body;
         const Ratings = [1, 2, 3, 4, 5] ;
         const { EventId } = req.params
-            if(!transactionId){
-                return res.status(400).json({message: "You should attend the event to give a review" })
-            } 
+
         await prisma.review.create({
             data: {
                 desc ,
-                rating ,
+                rating : Ratings.includes(rating) ? rating : ({ message: "rating must be 0-5"}),
                 eventId : +EventId,
                 transactionId ,
                 userId : req.user?.id.toString()!
@@ -23,6 +21,15 @@ export class ReviewControllers {
             console.log(err);
             res.status(400).send(err);
         }
-        
+    }
+
+    async getReviewsbyId(req: Request, res: Response){
+        try{
+            const { id } = req.params;
+            const reviews = await prisma.review.findMany({where: {eventId: +id}});
+        }catch (err) {
+            console.log(err);
+            res.status(400).send(err);
+        }
     }
 }
