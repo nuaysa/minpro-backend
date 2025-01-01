@@ -15,9 +15,10 @@ export class EventsRouter {
     private initializeRoutes() {
         this.router.get("/", this.eventController.getEvents)
         this.router.post("/", uploader("memoryStorage","thumbnail-").single("thumbnail"), this.eventController.addNewEvent)
-        // this.router.post("/ticket", this.eventController.createTicket)
+        this.router.post("/ticket", this.eventController.createTicket)
         
         this.router.get("/:slug", this.eventController.getEventSlug);
+        this.router.get("/ticket/:id", this.eventController.getTicketById)
     }
 
     getRouter() : Router {

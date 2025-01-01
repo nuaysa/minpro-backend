@@ -133,7 +133,7 @@ exports.Prisma.EventScalarFieldEnum = {
   category: 'category',
   location: 'location',
   venue: 'venue',
-  mapURL: 'mapURL',
+  maps: 'maps',
   date: 'date',
   time: 'time',
   type: 'type',
@@ -207,7 +207,8 @@ exports.Prisma.ReferralVoucherScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   createdAt: 'createdAt',
-  expiresAt: 'expiresAt'
+  expiresAt: 'expiresAt',
+  isValid: 'isValid'
 };
 
 exports.Prisma.UserPointsScalarFieldEnum = {
@@ -215,7 +216,8 @@ exports.Prisma.UserPointsScalarFieldEnum = {
   points: 'points',
   expiresAt: 'expiresAt',
   createdAt: 'createdAt',
-  userId: 'userId'
+  userId: 'userId',
+  isValid: 'isValid'
 };
 
 exports.Prisma.SortOrder = {

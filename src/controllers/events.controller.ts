@@ -18,11 +18,7 @@ export class EventsController {
       if (category !== "all") {
         filter.category = { equals: category as EventCategory };
       } else if (category == "all") {
-        filter.category = {};
-      } else if (category == "all") {
-        filter.category = {};
-      }
-
+        filter.category = {};}
       if (location) {
         filter.location = { equals: location as Location };
       }
@@ -32,7 +28,7 @@ export class EventsController {
 
 
       const events = await prisma.event.findMany({
-        where: filter && { isActive: true},  
+        where: filter,  
         include: { ticket: true, Promotor: true },
         orderBy: { id: "asc" },
         take: +limit,
@@ -69,10 +65,26 @@ export class EventsController {
           venue: true,
           thumbnail: true,
           type: true,
-          slug: true,
+          slug: true, 
+          maps: true,
+          Promotor: true,
+          ticket: true,
         },
       });
       res.status(200).send({ event });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+
+  async getTicketById(req: Request, res: Response){
+    try {
+      const { id } = req.params;
+      const ticket = await prisma.ticket.findUnique({
+        where: { id: +id },
+      });
+      res.status(200).send({ ticket });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
@@ -83,7 +95,7 @@ export class EventsController {
     try {
       if (!req.file) throw { message: "thumbnail empty" };
       const { secure_url } = await cloudinaryUpload(req.file, "thumbnail");
-      const { title, description, category, date, time, location, type, venue, mapURL, promotorId } = req.body;
+      const { title, description, category, date, time, location, type, venue, maps, promotorId } = req.body;
       const slug = createSlug(title);
 
       const isPromotorExists = await prisma.promotor.findUnique({
@@ -103,11 +115,12 @@ export class EventsController {
           time,
           location,
           venue,
-          mapURL,
+          maps,
           type,
           slug: slug,
           thumbnail: secure_url,
-          promotorId: req.Promotor?.id!
+          // promotorId: req.Promotor?.id!
+          promotorId: +promotorId,
         },
       });
       res.status(200).send({ message: "event created !" });
