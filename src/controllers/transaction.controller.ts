@@ -1,3 +1,4 @@
+
 import { Request, Response } from "express";
 import prisma from "../prisma";
 import axios from "axios";
@@ -119,9 +120,14 @@ export class TransactionController {
         data: { id, basePrice: basePrice!, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId: userId?.toString()!},
       });
 
+
+      const order = await prisma.transaction.create({
+        data: { id, basePrice, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId},
+      });
+      // userId: req.user?.id.toString()!
       const body = {
         transaction_details: {
-          order_id: order.id,
+          order_id: `invoice ${formatId(order.id)}`,
           gross_amount: order.finalPrice,
         },
         expiry: {
@@ -130,11 +136,13 @@ export class TransactionController {
         },
       };
 
+
       const { data } = await axios.post("https://app.sandbox.midtrans.com/snap/v1/transactions", body, {
         headers: {
           Authorization: "Basic U0ItTWlkLXNlcnZlci1OYW5sNVZZczQ5VF9JX1YyQXpabHBSVkg6",
         },
       });
+
 
       await prisma.transaction.update({
         data: { redirect_url: data.redirect_url },

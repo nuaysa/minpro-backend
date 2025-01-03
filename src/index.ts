@@ -6,6 +6,7 @@ import { AuthRouter } from "./routers/auth.router";
 import { UserRouter } from "./routers/user.router";  
 import { verifikasiToken } from "./middlewares/verify";  
 import { verifyRole } from "./middlewares/verify";  
+
 import { TransactionRouter } from "./routers/transaction.router";
 import { PromotorRouter } from "./routers/promotor.router";
 import { ReviewsRouter } from "./routers/reviews.router";
@@ -31,7 +32,6 @@ app.get("/api", ( req : Request, res: Response ) => {
 const userRouter = new UserRouter();
 const eventsRouter = new EventsRouter();
 const authRouter = new AuthRouter();
-const promotorRouter = new PromotorRouter();  
 const transactionRouter = new TransactionRouter();
 const reviewRouter = new ReviewsRouter();
 const callbackRouter = new CallbackRouter()

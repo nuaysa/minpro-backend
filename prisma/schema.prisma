@@ -199,6 +199,7 @@ model userPoints {
   userId    String  @unique
   isValid   Boolean @default(true)
 
+
   discount Transaction[]
   user     User          @relation(fields: [userId], references: [id])
 }
