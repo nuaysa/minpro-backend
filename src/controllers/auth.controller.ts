@@ -70,7 +70,7 @@ export class AuthController {
       const isPasswordValid = await compare(password, user?.password ?? ""); // ?? untuk kasih default value
       if (!isPasswordValid) throw { message: "Username atau password salah" };
       if (!user) throw { message: "Account not found!" };
-      // if (user.isVerify) throw { message: "account not verify" };
+      if (user.isVerify) throw { message: "account not verify" };
 
       const payload = { id: user.id, role: user };
       const token = sign(payload, process.env.JWT_KEY!, { expiresIn: "7d" });
@@ -124,7 +124,7 @@ export class AuthController {
         from: "suciclarissatiara@gmail.com",
         to: email,
         subject: "welcome to ate!",
-        html,
+        // html,
       });
       res.status(201).send({ message: "Register Successfully" });
     } catch (err) {
