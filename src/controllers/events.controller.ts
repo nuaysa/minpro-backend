@@ -7,18 +7,22 @@ import { createSlug } from "../helpers/slug";
 export class EventsController {
   async getEvents(req: Request, res: Response) {
     try {
-      let { search, category, location, page = 1, limit = 12 } = req.query;
+      let { search, category, location, page = 1, limit = 12, isActive } = req.query;
       category = req.query.category || "all";
       const filter: Prisma.EventWhereInput = {};
 
       if (search) {
         filter.title = { contains: search as string, mode: "insensitive" };
       }
+      if (isActive) {
+        filter.isActive = true;
+      }
 
       if (category !== "all") {
         filter.category = { equals: category as EventCategory };
       } else if (category == "all") {
         filter.category = {};}
+
       if (location) {
         filter.location = { equals: location as Location };
       }

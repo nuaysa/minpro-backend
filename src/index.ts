@@ -8,6 +8,8 @@ import { verifikasiToken } from "./middlewares/verify";
 import { verifyRole } from "./middlewares/verify";  
 import { TransactionRouter } from "./routers/transaction.router";
 import { PromotorRouter } from "./routers/promotor.router";
+import { ReviewsRouter } from "./routers/reviews.router";
+import { CallbackRouter } from "./routers/callback.router";
 
 const PORT: number = 8000;
 const app: Application = express();
@@ -31,13 +33,16 @@ const eventsRouter = new EventsRouter();
 const authRouter = new AuthRouter();
 const promotorRouter = new PromotorRouter();  
 const transactionRouter = new TransactionRouter();
+const reviewRouter = new ReviewsRouter();
+const callbackRouter = new CallbackRouter()
 
-
-app.use("/api/users", userRouter.getRouter());
-app.use("/api/events", eventsRouter.getRouter());
 app.use("/api/auth", authRouter.getRouter());
+app.use("/api/users", userRouter.getRouter());
 app.use("/api/promotor", promotorRouter.getRouter());  // Menambahkan rute untuk promotor
+app.use("/api/events", eventsRouter.getRouter());
 app.use("/api/transaction", transactionRouter.getRouter());
+app.use("/api/review", reviewRouter.getRouter());
+app.use("/api/callback", callbackRouter.getRouter());
 
 app.post("/api", (req: Request, res: Response) => {
   res.send("POST request received");

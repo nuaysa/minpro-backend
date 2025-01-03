@@ -70,7 +70,7 @@ export class AuthController {
       const isPasswordValid = await compare(password, user?.password ?? ""); // ?? untuk kasih default value
       if (!isPasswordValid) throw { message: "Username atau password salah" };
       if (!user) throw { message: "Account not found!" };
-      // if (user.isVerify) throw { message: "account not verify" };
+      if (user.isVerify) throw { message: "account not verify" };
 
       const payload = { id: user.id, role: user };
       const token = sign(payload, process.env.JWT_KEY!, { expiresIn: "7d" });
@@ -107,18 +107,18 @@ export class AuthController {
       const salt = await genSalt(8);
       const hashPassword = await hash(password, salt);
 
-      // const newPromotor = await prisma.promotor.create({
-        // data: { name: organisationName, email, password: hashPassword },
-      // });
+      const newPromotor = await prisma.promotor.create({
+        data: { name: organisationName, email, password: hashPassword },
+      });
 
-      // const payload = { id: newPromotor.id, role: newPromotor };
-      // const token = sign(payload, process.env.JWT_KEY!, { expiresIn: "7d" });
-      // const link = `${process.env.BASE_URL_FE}/verify/${token}`;
+      const payload = { id: newPromotor.id, role: newPromotor };
+      const token = sign(payload, process.env.JWT_KEY!, { expiresIn: "7d" });
+      const link = `${process.env.BASE_URL_FE}/verify/${token}`;
 
       const templatePath = path.join(__dirname, "../templates", "verify.hbs");
       const templateSource = fs.readFileSync(templatePath, "utf-8");
       const compiledTemplate = handlebars.compile(templateSource);
-      // const html = compiledTemplate({ organisationName, link });
+      const html = compiledTemplate({ organisationName, link });
 
       await transportEmail.sendMail({
         from: "suciclarissatiara@gmail.com",

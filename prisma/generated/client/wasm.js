@@ -270,6 +270,13 @@ exports.TransactionStatus = exports.$Enums.TransactionStatus = {
   canceled: 'canceled'
 };
 
+exports.Ratings = exports.$Enums.Ratings = {
+  bad: 'bad',
+  notBad: 'notBad',
+  good: 'good',
+  fantastic: 'fantastic'
+};
+
 exports.Prisma.ModelName = {
   Promotor: 'Promotor',
   Event: 'Event',

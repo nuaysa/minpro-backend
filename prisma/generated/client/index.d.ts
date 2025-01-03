@@ -113,6 +113,16 @@ export const TicketCategory: {
 
 export type TicketCategory = (typeof TicketCategory)[keyof typeof TicketCategory]
 
+
+export const Ratings: {
+  bad: 'bad',
+  notBad: 'notBad',
+  good: 'good',
+  fantastic: 'fantastic'
+};
+
+export type Ratings = (typeof Ratings)[keyof typeof Ratings]
+
 }
 
 export type EventCategory = $Enums.EventCategory
@@ -134,6 +144,10 @@ export const EventType: typeof $Enums.EventType
 export type TicketCategory = $Enums.TicketCategory
 
 export const TicketCategory: typeof $Enums.TicketCategory
+
+export type Ratings = $Enums.Ratings
+
+export const Ratings: typeof $Enums.Ratings
 
 /**
  * ##  Prisma Client ʲˢ
@@ -7447,7 +7461,6 @@ export namespace Prisma {
 
   export type ReviewAvgAggregateOutputType = {
     id: number | null
-    rating: number | null
     eventId: number | null
     transactionId: number | null
     ticketId: number | null
@@ -7455,7 +7468,6 @@ export namespace Prisma {
 
   export type ReviewSumAggregateOutputType = {
     id: number | null
-    rating: number | null
     eventId: number | null
     transactionId: number | null
     ticketId: number | null
@@ -7464,7 +7476,7 @@ export namespace Prisma {
   export type ReviewMinAggregateOutputType = {
     id: number | null
     desc: string | null
-    rating: number | null
+    rating: $Enums.Ratings | null
     userId: string | null
     eventId: number | null
     transactionId: number | null
@@ -7474,7 +7486,7 @@ export namespace Prisma {
   export type ReviewMaxAggregateOutputType = {
     id: number | null
     desc: string | null
-    rating: number | null
+    rating: $Enums.Ratings | null
     userId: string | null
     eventId: number | null
     transactionId: number | null
@@ -7495,7 +7507,6 @@ export namespace Prisma {
 
   export type ReviewAvgAggregateInputType = {
     id?: true
-    rating?: true
     eventId?: true
     transactionId?: true
     ticketId?: true
@@ -7503,7 +7514,6 @@ export namespace Prisma {
 
   export type ReviewSumAggregateInputType = {
     id?: true
-    rating?: true
     eventId?: true
     transactionId?: true
     ticketId?: true
@@ -7629,7 +7639,7 @@ export namespace Prisma {
   export type ReviewGroupByOutputType = {
     id: number
     desc: string | null
-    rating: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     transactionId: number
@@ -7717,7 +7727,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       desc: string | null
-      rating: number
+      rating: $Enums.Ratings
       userId: string
       eventId: number
       transactionId: number
@@ -8121,7 +8131,7 @@ export namespace Prisma {
   interface ReviewFieldRefs {
     readonly id: FieldRef<"Review", 'Int'>
     readonly desc: FieldRef<"Review", 'String'>
-    readonly rating: FieldRef<"Review", 'Int'>
+    readonly rating: FieldRef<"Review", 'Ratings'>
     readonly userId: FieldRef<"Review", 'String'>
     readonly eventId: FieldRef<"Review", 'Int'>
     readonly transactionId: FieldRef<"Review", 'Int'>
@@ -11824,6 +11834,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Ratings'
+   */
+  export type EnumRatingsFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Ratings'>
+    
+
+
+  /**
+   * Reference to a field of type 'Ratings[]'
+   */
+  export type ListEnumRatingsFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Ratings[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -12301,7 +12325,7 @@ export namespace Prisma {
     NOT?: ReviewWhereInput | ReviewWhereInput[]
     id?: IntFilter<"Review"> | number
     desc?: StringNullableFilter<"Review"> | string | null
-    rating?: IntFilter<"Review"> | number
+    rating?: EnumRatingsFilter<"Review"> | $Enums.Ratings
     userId?: StringFilter<"Review"> | string
     eventId?: IntFilter<"Review"> | number
     transactionId?: IntFilter<"Review"> | number
@@ -12332,7 +12356,7 @@ export namespace Prisma {
     OR?: ReviewWhereInput[]
     NOT?: ReviewWhereInput | ReviewWhereInput[]
     desc?: StringNullableFilter<"Review"> | string | null
-    rating?: IntFilter<"Review"> | number
+    rating?: EnumRatingsFilter<"Review"> | $Enums.Ratings
     userId?: StringFilter<"Review"> | string
     eventId?: IntFilter<"Review"> | number
     transactionId?: IntFilter<"Review"> | number
@@ -12364,7 +12388,7 @@ export namespace Prisma {
     NOT?: ReviewScalarWhereWithAggregatesInput | ReviewScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Review"> | number
     desc?: StringNullableWithAggregatesFilter<"Review"> | string | null
-    rating?: IntWithAggregatesFilter<"Review"> | number
+    rating?: EnumRatingsWithAggregatesFilter<"Review"> | $Enums.Ratings
     userId?: StringWithAggregatesFilter<"Review"> | string
     eventId?: IntWithAggregatesFilter<"Review"> | number
     transactionId?: IntWithAggregatesFilter<"Review"> | number
@@ -13047,7 +13071,7 @@ export namespace Prisma {
 
   export type ReviewCreateInput = {
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     isValid: DetailTransactionCreateNestedOneWithoutReviewInput
     event: EventCreateNestedOneWithoutReviewInput
     user: UserCreateNestedOneWithoutReviewInput
@@ -13057,7 +13081,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     transactionId: number
@@ -13066,7 +13090,7 @@ export namespace Prisma {
 
   export type ReviewUpdateInput = {
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     isValid?: DetailTransactionUpdateOneRequiredWithoutReviewNestedInput
     event?: EventUpdateOneRequiredWithoutReviewNestedInput
     user?: UserUpdateOneRequiredWithoutReviewNestedInput
@@ -13076,7 +13100,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     eventId?: IntFieldUpdateOperationsInput | number
     transactionId?: IntFieldUpdateOperationsInput | number
@@ -13086,7 +13110,7 @@ export namespace Prisma {
   export type ReviewCreateManyInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     transactionId: number
@@ -13095,13 +13119,13 @@ export namespace Prisma {
 
   export type ReviewUpdateManyMutationInput = {
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
   }
 
   export type ReviewUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     eventId?: IntFieldUpdateOperationsInput | number
     transactionId?: IntFieldUpdateOperationsInput | number
@@ -13922,6 +13946,13 @@ export namespace Prisma {
     ticketId?: SortOrder
   }
 
+  export type EnumRatingsFilter<$PrismaModel = never> = {
+    equals?: $Enums.Ratings | EnumRatingsFieldRefInput<$PrismaModel>
+    in?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    not?: NestedEnumRatingsFilter<$PrismaModel> | $Enums.Ratings
+  }
+
   export type DetailTransactionScalarRelationFilter = {
     is?: DetailTransactionWhereInput
     isNot?: DetailTransactionWhereInput
@@ -13944,7 +13975,6 @@ export namespace Prisma {
 
   export type ReviewAvgOrderByAggregateInput = {
     id?: SortOrder
-    rating?: SortOrder
     eventId?: SortOrder
     transactionId?: SortOrder
     ticketId?: SortOrder
@@ -13972,10 +14002,19 @@ export namespace Prisma {
 
   export type ReviewSumOrderByAggregateInput = {
     id?: SortOrder
-    rating?: SortOrder
     eventId?: SortOrder
     transactionId?: SortOrder
     ticketId?: SortOrder
+  }
+
+  export type EnumRatingsWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Ratings | EnumRatingsFieldRefInput<$PrismaModel>
+    in?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    not?: NestedEnumRatingsWithAggregatesFilter<$PrismaModel> | $Enums.Ratings
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRatingsFilter<$PrismaModel>
+    _max?: NestedEnumRatingsFilter<$PrismaModel>
   }
 
   export type ReferralVoucherListRelationFilter = {
@@ -14740,6 +14779,10 @@ export namespace Prisma {
     connect?: TicketWhereUniqueInput
   }
 
+  export type EnumRatingsFieldUpdateOperationsInput = {
+    set?: $Enums.Ratings
+  }
+
   export type DetailTransactionUpdateOneRequiredWithoutReviewNestedInput = {
     create?: XOR<DetailTransactionCreateWithoutReviewInput, DetailTransactionUncheckedCreateWithoutReviewInput>
     connectOrCreate?: DetailTransactionCreateOrConnectWithoutReviewInput
@@ -15315,6 +15358,23 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumRatingsFilter<$PrismaModel = never> = {
+    equals?: $Enums.Ratings | EnumRatingsFieldRefInput<$PrismaModel>
+    in?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    not?: NestedEnumRatingsFilter<$PrismaModel> | $Enums.Ratings
+  }
+
+  export type NestedEnumRatingsWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Ratings | EnumRatingsFieldRefInput<$PrismaModel>
+    in?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    not?: NestedEnumRatingsWithAggregatesFilter<$PrismaModel> | $Enums.Ratings
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRatingsFilter<$PrismaModel>
+    _max?: NestedEnumRatingsFilter<$PrismaModel>
+  }
+
   export type EventCreateWithoutPromotorInput = {
     title: string
     description: string
@@ -15559,7 +15619,7 @@ export namespace Prisma {
 
   export type ReviewCreateWithoutEventInput = {
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     isValid: DetailTransactionCreateNestedOneWithoutReviewInput
     user: UserCreateNestedOneWithoutReviewInput
     Ticket?: TicketCreateNestedOneWithoutReviewInput
@@ -15568,7 +15628,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateWithoutEventInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     transactionId: number
     ticketId?: number | null
@@ -15679,7 +15739,7 @@ export namespace Prisma {
     NOT?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
     id?: IntFilter<"Review"> | number
     desc?: StringNullableFilter<"Review"> | string | null
-    rating?: IntFilter<"Review"> | number
+    rating?: EnumRatingsFilter<"Review"> | $Enums.Ratings
     userId?: StringFilter<"Review"> | string
     eventId?: IntFilter<"Review"> | number
     transactionId?: IntFilter<"Review"> | number
@@ -15824,7 +15884,7 @@ export namespace Prisma {
 
   export type ReviewCreateWithoutTicketInput = {
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     isValid: DetailTransactionCreateNestedOneWithoutReviewInput
     event: EventCreateNestedOneWithoutReviewInput
     user: UserCreateNestedOneWithoutReviewInput
@@ -15833,7 +15893,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateWithoutTicketInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     transactionId: number
@@ -16281,7 +16341,7 @@ export namespace Prisma {
 
   export type ReviewCreateWithoutIsValidInput = {
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     event: EventCreateNestedOneWithoutReviewInput
     user: UserCreateNestedOneWithoutReviewInput
     Ticket?: TicketCreateNestedOneWithoutReviewInput
@@ -16290,7 +16350,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateWithoutIsValidInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     ticketId?: number | null
@@ -16953,7 +17013,7 @@ export namespace Prisma {
 
   export type ReviewCreateWithoutUserInput = {
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     isValid: DetailTransactionCreateNestedOneWithoutReviewInput
     event: EventCreateNestedOneWithoutReviewInput
     Ticket?: TicketCreateNestedOneWithoutReviewInput
@@ -16962,7 +17022,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateWithoutUserInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     eventId: number
     transactionId: number
     ticketId?: number | null
@@ -17475,7 +17535,7 @@ export namespace Prisma {
   export type ReviewCreateManyEventInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     transactionId: number
     ticketId?: number | null
@@ -17546,7 +17606,7 @@ export namespace Prisma {
 
   export type ReviewUpdateWithoutEventInput = {
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     isValid?: DetailTransactionUpdateOneRequiredWithoutReviewNestedInput
     user?: UserUpdateOneRequiredWithoutReviewNestedInput
     Ticket?: TicketUpdateOneWithoutReviewNestedInput
@@ -17555,7 +17615,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateWithoutEventInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     transactionId?: IntFieldUpdateOperationsInput | number
     ticketId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -17564,7 +17624,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateManyWithoutEventInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     transactionId?: IntFieldUpdateOperationsInput | number
     ticketId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -17597,7 +17657,7 @@ export namespace Prisma {
   export type ReviewCreateManyTicketInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     transactionId: number
@@ -17679,7 +17739,7 @@ export namespace Prisma {
 
   export type ReviewUpdateWithoutTicketInput = {
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     isValid?: DetailTransactionUpdateOneRequiredWithoutReviewNestedInput
     event?: EventUpdateOneRequiredWithoutReviewNestedInput
     user?: UserUpdateOneRequiredWithoutReviewNestedInput
@@ -17688,7 +17748,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateWithoutTicketInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     eventId?: IntFieldUpdateOperationsInput | number
     transactionId?: IntFieldUpdateOperationsInput | number
@@ -17697,7 +17757,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateManyWithoutTicketInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     eventId?: IntFieldUpdateOperationsInput | number
     transactionId?: IntFieldUpdateOperationsInput | number
@@ -17735,7 +17795,7 @@ export namespace Prisma {
   export type ReviewCreateManyIsValidInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     ticketId?: number | null
@@ -17743,7 +17803,7 @@ export namespace Prisma {
 
   export type ReviewUpdateWithoutIsValidInput = {
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     event?: EventUpdateOneRequiredWithoutReviewNestedInput
     user?: UserUpdateOneRequiredWithoutReviewNestedInput
     Ticket?: TicketUpdateOneWithoutReviewNestedInput
@@ -17752,7 +17812,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateWithoutIsValidInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     eventId?: IntFieldUpdateOperationsInput | number
     ticketId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -17761,7 +17821,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateManyWithoutIsValidInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     eventId?: IntFieldUpdateOperationsInput | number
     ticketId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -17802,7 +17862,7 @@ export namespace Prisma {
   export type ReviewCreateManyUserInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     eventId: number
     transactionId: number
     ticketId?: number | null
@@ -17909,7 +17969,7 @@ export namespace Prisma {
 
   export type ReviewUpdateWithoutUserInput = {
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     isValid?: DetailTransactionUpdateOneRequiredWithoutReviewNestedInput
     event?: EventUpdateOneRequiredWithoutReviewNestedInput
     Ticket?: TicketUpdateOneWithoutReviewNestedInput
@@ -17918,7 +17978,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     eventId?: IntFieldUpdateOperationsInput | number
     transactionId?: IntFieldUpdateOperationsInput | number
     ticketId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -17927,7 +17987,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     eventId?: IntFieldUpdateOperationsInput | number
     transactionId?: IntFieldUpdateOperationsInput | number
     ticketId?: NullableIntFieldUpdateOperationsInput | number | null

@@ -51,6 +51,13 @@ enum TicketCategory {
   free
 }
 
+enum Ratings {
+  bad
+  notBad
+  good 
+  fantastic
+}
+
 model Promotor {
   id       Int      @id @default(autoincrement())
   name     String   @unique
@@ -145,7 +152,7 @@ model DetailTransaction {
 model Review {
   id            Int     @id @default(autoincrement())
   desc          String?
-  rating        Int     @default(5)
+  rating        Ratings
   userId        String
   eventId       Int
   transactionId Int

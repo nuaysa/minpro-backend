@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ReviewControllers } from "src/controllers/reviews.controller";
+import { ReviewControllers } from "../controllers/reviews.controller";
 
 export class ReviewsRouter {
     private reviewController: ReviewControllers
@@ -13,7 +13,7 @@ export class ReviewsRouter {
 
     private initializeRoutes() {
         this.router.post('/:eventId', this.reviewController.CreateReview)
-        this.router.get('/:eventId', this.reviewController.getReviewsbyId)
+        this.router.get('/:id', this.reviewController.getReviewsbyId)
     }
 
     getRouter() : Router {
