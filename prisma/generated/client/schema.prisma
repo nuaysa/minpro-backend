@@ -51,13 +51,20 @@ enum TicketCategory {
   free
 }
 
+enum Ratings {
+  bad
+  notBad
+  good
+  fantastic
+}
+
 model Promotor {
   id       Int      @id @default(autoincrement())
   name     String   @unique
   email    String   @unique
   password String
-  avatar   String
-  isVerify Boolean
+  avatar   String   @default("https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg")
+  isVerify Boolean  @default(false)
   event    Event[]
   ticket   Ticket[]
 }
@@ -69,7 +76,7 @@ model Event {
   category    EventCategory
   location    Location
   venue       String
-  mapURL      String
+  maps        String        @default("https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0000000000005!2d107.6190003147697!3d-6.917464994994422!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f2b0f1b0f1e7%3A0x7b3b1b3b1b3b1b3!2sGedung%20Sate!5e0!3m2!1sid!2sid!4v1626820000000!5m2!1sid!2sid")
   date        DateTime      @db.Date
   time        DateTime      @db.Time()
   type        EventType
@@ -144,7 +151,7 @@ model DetailTransaction {
 model Review {
   id            Int     @id @default(autoincrement())
   desc          String?
-  rating        Int     @default(5)
+  rating        Ratings
   userId        String
   eventId       Int
   transactionId Int
@@ -177,6 +184,7 @@ model referralVoucher {
   userId    String   @unique
   createdAt DateTime @default(now())
   expiresAt DateTime
+  isValid   Boolean  @default(true)
 
   discount Transaction[]
   user     User          @relation(fields: [userId], references: [id])
@@ -188,6 +196,8 @@ model userPoints {
   expiresAt DateTime
   createdAt DateTime @default(now())
   userId    String   @unique
+  isValid   Boolean  @default(true)
+
 
   discount Transaction[]
   user     User          @relation(fields: [userId], references: [id])

@@ -113,6 +113,16 @@ export const TicketCategory: {
 
 export type TicketCategory = (typeof TicketCategory)[keyof typeof TicketCategory]
 
+
+export const Ratings: {
+  bad: 'bad',
+  notBad: 'notBad',
+  good: 'good',
+  fantastic: 'fantastic'
+};
+
+export type Ratings = (typeof Ratings)[keyof typeof Ratings]
+
 }
 
 export type EventCategory = $Enums.EventCategory
@@ -134,6 +144,10 @@ export const EventType: typeof $Enums.EventType
 export type TicketCategory = $Enums.TicketCategory
 
 export const TicketCategory: typeof $Enums.TicketCategory
+
+export type Ratings = $Enums.Ratings
+
+export const Ratings: typeof $Enums.Ratings
 
 /**
  * ##  Prisma Client ʲˢ
@@ -2972,7 +2986,7 @@ export namespace Prisma {
     category: $Enums.EventCategory | null
     location: $Enums.Location | null
     venue: string | null
-    mapURL: string | null
+    maps: string | null
     date: Date | null
     time: Date | null
     type: $Enums.EventType | null
@@ -2989,7 +3003,7 @@ export namespace Prisma {
     category: $Enums.EventCategory | null
     location: $Enums.Location | null
     venue: string | null
-    mapURL: string | null
+    maps: string | null
     date: Date | null
     time: Date | null
     type: $Enums.EventType | null
@@ -3006,7 +3020,7 @@ export namespace Prisma {
     category: number
     location: number
     venue: number
-    mapURL: number
+    maps: number
     date: number
     time: number
     type: number
@@ -3035,7 +3049,7 @@ export namespace Prisma {
     category?: true
     location?: true
     venue?: true
-    mapURL?: true
+    maps?: true
     date?: true
     time?: true
     type?: true
@@ -3052,7 +3066,7 @@ export namespace Prisma {
     category?: true
     location?: true
     venue?: true
-    mapURL?: true
+    maps?: true
     date?: true
     time?: true
     type?: true
@@ -3069,7 +3083,7 @@ export namespace Prisma {
     category?: true
     location?: true
     venue?: true
-    mapURL?: true
+    maps?: true
     date?: true
     time?: true
     type?: true
@@ -3173,7 +3187,7 @@ export namespace Prisma {
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps: string
     date: Date
     time: Date
     type: $Enums.EventType
@@ -3209,7 +3223,7 @@ export namespace Prisma {
     category?: boolean
     location?: boolean
     venue?: boolean
-    mapURL?: boolean
+    maps?: boolean
     date?: boolean
     time?: boolean
     type?: boolean
@@ -3231,7 +3245,7 @@ export namespace Prisma {
     category?: boolean
     location?: boolean
     venue?: boolean
-    mapURL?: boolean
+    maps?: boolean
     date?: boolean
     time?: boolean
     type?: boolean
@@ -3249,7 +3263,7 @@ export namespace Prisma {
     category?: boolean
     location?: boolean
     venue?: boolean
-    mapURL?: boolean
+    maps?: boolean
     date?: boolean
     time?: boolean
     type?: boolean
@@ -3285,7 +3299,7 @@ export namespace Prisma {
       category: $Enums.EventCategory
       location: $Enums.Location
       venue: string
-      mapURL: string
+      maps: string
       date: Date
       time: Date
       type: $Enums.EventType
@@ -3696,7 +3710,7 @@ export namespace Prisma {
     readonly category: FieldRef<"Event", 'EventCategory'>
     readonly location: FieldRef<"Event", 'Location'>
     readonly venue: FieldRef<"Event", 'String'>
-    readonly mapURL: FieldRef<"Event", 'String'>
+    readonly maps: FieldRef<"Event", 'String'>
     readonly date: FieldRef<"Event", 'DateTime'>
     readonly time: FieldRef<"Event", 'DateTime'>
     readonly type: FieldRef<"Event", 'EventType'>
@@ -7447,7 +7461,6 @@ export namespace Prisma {
 
   export type ReviewAvgAggregateOutputType = {
     id: number | null
-    rating: number | null
     eventId: number | null
     transactionId: number | null
     ticketId: number | null
@@ -7455,7 +7468,6 @@ export namespace Prisma {
 
   export type ReviewSumAggregateOutputType = {
     id: number | null
-    rating: number | null
     eventId: number | null
     transactionId: number | null
     ticketId: number | null
@@ -7464,7 +7476,7 @@ export namespace Prisma {
   export type ReviewMinAggregateOutputType = {
     id: number | null
     desc: string | null
-    rating: number | null
+    rating: $Enums.Ratings | null
     userId: string | null
     eventId: number | null
     transactionId: number | null
@@ -7474,7 +7486,7 @@ export namespace Prisma {
   export type ReviewMaxAggregateOutputType = {
     id: number | null
     desc: string | null
-    rating: number | null
+    rating: $Enums.Ratings | null
     userId: string | null
     eventId: number | null
     transactionId: number | null
@@ -7495,7 +7507,6 @@ export namespace Prisma {
 
   export type ReviewAvgAggregateInputType = {
     id?: true
-    rating?: true
     eventId?: true
     transactionId?: true
     ticketId?: true
@@ -7503,7 +7514,6 @@ export namespace Prisma {
 
   export type ReviewSumAggregateInputType = {
     id?: true
-    rating?: true
     eventId?: true
     transactionId?: true
     ticketId?: true
@@ -7629,7 +7639,7 @@ export namespace Prisma {
   export type ReviewGroupByOutputType = {
     id: number
     desc: string | null
-    rating: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     transactionId: number
@@ -7717,7 +7727,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       desc: string | null
-      rating: number
+      rating: $Enums.Ratings
       userId: string
       eventId: number
       transactionId: number
@@ -8121,7 +8131,7 @@ export namespace Prisma {
   interface ReviewFieldRefs {
     readonly id: FieldRef<"Review", 'Int'>
     readonly desc: FieldRef<"Review", 'String'>
-    readonly rating: FieldRef<"Review", 'Int'>
+    readonly rating: FieldRef<"Review", 'Ratings'>
     readonly userId: FieldRef<"Review", 'String'>
     readonly eventId: FieldRef<"Review", 'Int'>
     readonly transactionId: FieldRef<"Review", 'Int'>
@@ -9554,6 +9564,7 @@ export namespace Prisma {
     userId: string | null
     createdAt: Date | null
     expiresAt: Date | null
+    isValid: boolean | null
   }
 
   export type ReferralVoucherMaxAggregateOutputType = {
@@ -9561,6 +9572,7 @@ export namespace Prisma {
     userId: string | null
     createdAt: Date | null
     expiresAt: Date | null
+    isValid: boolean | null
   }
 
   export type ReferralVoucherCountAggregateOutputType = {
@@ -9568,6 +9580,7 @@ export namespace Prisma {
     userId: number
     createdAt: number
     expiresAt: number
+    isValid: number
     _all: number
   }
 
@@ -9585,6 +9598,7 @@ export namespace Prisma {
     userId?: true
     createdAt?: true
     expiresAt?: true
+    isValid?: true
   }
 
   export type ReferralVoucherMaxAggregateInputType = {
@@ -9592,6 +9606,7 @@ export namespace Prisma {
     userId?: true
     createdAt?: true
     expiresAt?: true
+    isValid?: true
   }
 
   export type ReferralVoucherCountAggregateInputType = {
@@ -9599,6 +9614,7 @@ export namespace Prisma {
     userId?: true
     createdAt?: true
     expiresAt?: true
+    isValid?: true
     _all?: true
   }
 
@@ -9693,6 +9709,7 @@ export namespace Prisma {
     userId: string
     createdAt: Date
     expiresAt: Date
+    isValid: boolean
     _count: ReferralVoucherCountAggregateOutputType | null
     _avg: ReferralVoucherAvgAggregateOutputType | null
     _sum: ReferralVoucherSumAggregateOutputType | null
@@ -9719,6 +9736,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     expiresAt?: boolean
+    isValid?: boolean
     discount?: boolean | referralVoucher$discountArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | ReferralVoucherCountOutputTypeDefaultArgs<ExtArgs>
@@ -9729,6 +9747,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     expiresAt?: boolean
+    isValid?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["referralVoucher"]>
 
@@ -9737,6 +9756,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     expiresAt?: boolean
+    isValid?: boolean
   }
 
   export type referralVoucherInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9759,6 +9779,7 @@ export namespace Prisma {
       userId: string
       createdAt: Date
       expiresAt: Date
+      isValid: boolean
     }, ExtArgs["result"]["referralVoucher"]>
     composites: {}
   }
@@ -10158,6 +10179,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"referralVoucher", 'String'>
     readonly createdAt: FieldRef<"referralVoucher", 'DateTime'>
     readonly expiresAt: FieldRef<"referralVoucher", 'DateTime'>
+    readonly isValid: FieldRef<"referralVoucher", 'Boolean'>
   }
     
 
@@ -10538,6 +10560,7 @@ export namespace Prisma {
     expiresAt: Date | null
     createdAt: Date | null
     userId: string | null
+    isValid: boolean | null
   }
 
   export type UserPointsMaxAggregateOutputType = {
@@ -10546,6 +10569,7 @@ export namespace Prisma {
     expiresAt: Date | null
     createdAt: Date | null
     userId: string | null
+    isValid: boolean | null
   }
 
   export type UserPointsCountAggregateOutputType = {
@@ -10554,6 +10578,7 @@ export namespace Prisma {
     expiresAt: number
     createdAt: number
     userId: number
+    isValid: number
     _all: number
   }
 
@@ -10574,6 +10599,7 @@ export namespace Prisma {
     expiresAt?: true
     createdAt?: true
     userId?: true
+    isValid?: true
   }
 
   export type UserPointsMaxAggregateInputType = {
@@ -10582,6 +10608,7 @@ export namespace Prisma {
     expiresAt?: true
     createdAt?: true
     userId?: true
+    isValid?: true
   }
 
   export type UserPointsCountAggregateInputType = {
@@ -10590,6 +10617,7 @@ export namespace Prisma {
     expiresAt?: true
     createdAt?: true
     userId?: true
+    isValid?: true
     _all?: true
   }
 
@@ -10685,6 +10713,7 @@ export namespace Prisma {
     expiresAt: Date
     createdAt: Date
     userId: string
+    isValid: boolean
     _count: UserPointsCountAggregateOutputType | null
     _avg: UserPointsAvgAggregateOutputType | null
     _sum: UserPointsSumAggregateOutputType | null
@@ -10712,6 +10741,7 @@ export namespace Prisma {
     expiresAt?: boolean
     createdAt?: boolean
     userId?: boolean
+    isValid?: boolean
     discount?: boolean | userPoints$discountArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | UserPointsCountOutputTypeDefaultArgs<ExtArgs>
@@ -10723,6 +10753,7 @@ export namespace Prisma {
     expiresAt?: boolean
     createdAt?: boolean
     userId?: boolean
+    isValid?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userPoints"]>
 
@@ -10732,6 +10763,7 @@ export namespace Prisma {
     expiresAt?: boolean
     createdAt?: boolean
     userId?: boolean
+    isValid?: boolean
   }
 
   export type userPointsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10755,6 +10787,7 @@ export namespace Prisma {
       expiresAt: Date
       createdAt: Date
       userId: string
+      isValid: boolean
     }, ExtArgs["result"]["userPoints"]>
     composites: {}
   }
@@ -11155,6 +11188,7 @@ export namespace Prisma {
     readonly expiresAt: FieldRef<"userPoints", 'DateTime'>
     readonly createdAt: FieldRef<"userPoints", 'DateTime'>
     readonly userId: FieldRef<"userPoints", 'String'>
+    readonly isValid: FieldRef<"userPoints", 'Boolean'>
   }
     
 
@@ -11540,7 +11574,7 @@ export namespace Prisma {
     category: 'category',
     location: 'location',
     venue: 'venue',
-    mapURL: 'mapURL',
+    maps: 'maps',
     date: 'date',
     time: 'time',
     type: 'type',
@@ -11632,7 +11666,8 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     createdAt: 'createdAt',
-    expiresAt: 'expiresAt'
+    expiresAt: 'expiresAt',
+    isValid: 'isValid'
   };
 
   export type ReferralVoucherScalarFieldEnum = (typeof ReferralVoucherScalarFieldEnum)[keyof typeof ReferralVoucherScalarFieldEnum]
@@ -11643,7 +11678,8 @@ export namespace Prisma {
     points: 'points',
     expiresAt: 'expiresAt',
     createdAt: 'createdAt',
-    userId: 'userId'
+    userId: 'userId',
+    isValid: 'isValid'
   };
 
   export type UserPointsScalarFieldEnum = (typeof UserPointsScalarFieldEnum)[keyof typeof UserPointsScalarFieldEnum]
@@ -11798,6 +11834,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Ratings'
+   */
+  export type EnumRatingsFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Ratings'>
+    
+
+
+  /**
+   * Reference to a field of type 'Ratings[]'
+   */
+  export type ListEnumRatingsFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Ratings[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -11889,7 +11939,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFilter<"Event"> | $Enums.EventCategory
     location?: EnumLocationFilter<"Event"> | $Enums.Location
     venue?: StringFilter<"Event"> | string
-    mapURL?: StringFilter<"Event"> | string
+    maps?: StringFilter<"Event"> | string
     date?: DateTimeFilter<"Event"> | Date | string
     time?: DateTimeFilter<"Event"> | Date | string
     type?: EnumEventTypeFilter<"Event"> | $Enums.EventType
@@ -11910,7 +11960,7 @@ export namespace Prisma {
     category?: SortOrder
     location?: SortOrder
     venue?: SortOrder
-    mapURL?: SortOrder
+    maps?: SortOrder
     date?: SortOrder
     time?: SortOrder
     type?: SortOrder
@@ -11935,7 +11985,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFilter<"Event"> | $Enums.EventCategory
     location?: EnumLocationFilter<"Event"> | $Enums.Location
     venue?: StringFilter<"Event"> | string
-    mapURL?: StringFilter<"Event"> | string
+    maps?: StringFilter<"Event"> | string
     date?: DateTimeFilter<"Event"> | Date | string
     time?: DateTimeFilter<"Event"> | Date | string
     type?: EnumEventTypeFilter<"Event"> | $Enums.EventType
@@ -11955,7 +12005,7 @@ export namespace Prisma {
     category?: SortOrder
     location?: SortOrder
     venue?: SortOrder
-    mapURL?: SortOrder
+    maps?: SortOrder
     date?: SortOrder
     time?: SortOrder
     type?: SortOrder
@@ -11980,7 +12030,7 @@ export namespace Prisma {
     category?: EnumEventCategoryWithAggregatesFilter<"Event"> | $Enums.EventCategory
     location?: EnumLocationWithAggregatesFilter<"Event"> | $Enums.Location
     venue?: StringWithAggregatesFilter<"Event"> | string
-    mapURL?: StringWithAggregatesFilter<"Event"> | string
+    maps?: StringWithAggregatesFilter<"Event"> | string
     date?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     time?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     type?: EnumEventTypeWithAggregatesFilter<"Event"> | $Enums.EventType
@@ -12275,7 +12325,7 @@ export namespace Prisma {
     NOT?: ReviewWhereInput | ReviewWhereInput[]
     id?: IntFilter<"Review"> | number
     desc?: StringNullableFilter<"Review"> | string | null
-    rating?: IntFilter<"Review"> | number
+    rating?: EnumRatingsFilter<"Review"> | $Enums.Ratings
     userId?: StringFilter<"Review"> | string
     eventId?: IntFilter<"Review"> | number
     transactionId?: IntFilter<"Review"> | number
@@ -12306,7 +12356,7 @@ export namespace Prisma {
     OR?: ReviewWhereInput[]
     NOT?: ReviewWhereInput | ReviewWhereInput[]
     desc?: StringNullableFilter<"Review"> | string | null
-    rating?: IntFilter<"Review"> | number
+    rating?: EnumRatingsFilter<"Review"> | $Enums.Ratings
     userId?: StringFilter<"Review"> | string
     eventId?: IntFilter<"Review"> | number
     transactionId?: IntFilter<"Review"> | number
@@ -12338,7 +12388,7 @@ export namespace Prisma {
     NOT?: ReviewScalarWhereWithAggregatesInput | ReviewScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Review"> | number
     desc?: StringNullableWithAggregatesFilter<"Review"> | string | null
-    rating?: IntWithAggregatesFilter<"Review"> | number
+    rating?: EnumRatingsWithAggregatesFilter<"Review"> | $Enums.Ratings
     userId?: StringWithAggregatesFilter<"Review"> | string
     eventId?: IntWithAggregatesFilter<"Review"> | number
     transactionId?: IntWithAggregatesFilter<"Review"> | number
@@ -12432,6 +12482,7 @@ export namespace Prisma {
     userId?: StringFilter<"referralVoucher"> | string
     createdAt?: DateTimeFilter<"referralVoucher"> | Date | string
     expiresAt?: DateTimeFilter<"referralVoucher"> | Date | string
+    isValid?: BoolFilter<"referralVoucher"> | boolean
     discount?: TransactionListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -12441,6 +12492,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     expiresAt?: SortOrder
+    isValid?: SortOrder
     discount?: TransactionOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
   }
@@ -12453,6 +12505,7 @@ export namespace Prisma {
     NOT?: referralVoucherWhereInput | referralVoucherWhereInput[]
     createdAt?: DateTimeFilter<"referralVoucher"> | Date | string
     expiresAt?: DateTimeFilter<"referralVoucher"> | Date | string
+    isValid?: BoolFilter<"referralVoucher"> | boolean
     discount?: TransactionListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId">
@@ -12462,6 +12515,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     expiresAt?: SortOrder
+    isValid?: SortOrder
     _count?: referralVoucherCountOrderByAggregateInput
     _avg?: referralVoucherAvgOrderByAggregateInput
     _max?: referralVoucherMaxOrderByAggregateInput
@@ -12477,6 +12531,7 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"referralVoucher"> | string
     createdAt?: DateTimeWithAggregatesFilter<"referralVoucher"> | Date | string
     expiresAt?: DateTimeWithAggregatesFilter<"referralVoucher"> | Date | string
+    isValid?: BoolWithAggregatesFilter<"referralVoucher"> | boolean
   }
 
   export type userPointsWhereInput = {
@@ -12488,6 +12543,7 @@ export namespace Prisma {
     expiresAt?: DateTimeFilter<"userPoints"> | Date | string
     createdAt?: DateTimeFilter<"userPoints"> | Date | string
     userId?: StringFilter<"userPoints"> | string
+    isValid?: BoolFilter<"userPoints"> | boolean
     discount?: TransactionListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -12498,6 +12554,7 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
+    isValid?: SortOrder
     discount?: TransactionOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
   }
@@ -12511,6 +12568,7 @@ export namespace Prisma {
     points?: IntFilter<"userPoints"> | number
     expiresAt?: DateTimeFilter<"userPoints"> | Date | string
     createdAt?: DateTimeFilter<"userPoints"> | Date | string
+    isValid?: BoolFilter<"userPoints"> | boolean
     discount?: TransactionListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId">
@@ -12521,6 +12579,7 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
+    isValid?: SortOrder
     _count?: userPointsCountOrderByAggregateInput
     _avg?: userPointsAvgOrderByAggregateInput
     _max?: userPointsMaxOrderByAggregateInput
@@ -12537,14 +12596,15 @@ export namespace Prisma {
     expiresAt?: DateTimeWithAggregatesFilter<"userPoints"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"userPoints"> | Date | string
     userId?: StringWithAggregatesFilter<"userPoints"> | string
+    isValid?: BoolWithAggregatesFilter<"userPoints"> | boolean
   }
 
   export type PromotorCreateInput = {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
     event?: EventCreateNestedManyWithoutPromotorInput
     ticket?: TicketCreateNestedManyWithoutPromotorInput
   }
@@ -12554,8 +12614,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
     event?: EventUncheckedCreateNestedManyWithoutPromotorInput
     ticket?: TicketUncheckedCreateNestedManyWithoutPromotorInput
   }
@@ -12586,8 +12646,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
   }
 
   export type PromotorUpdateManyMutationInput = {
@@ -12613,7 +12673,7 @@ export namespace Prisma {
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps?: string
     date: Date | string
     time: Date | string
     type: $Enums.EventType
@@ -12633,7 +12693,7 @@ export namespace Prisma {
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps?: string
     date: Date | string
     time: Date | string
     type: $Enums.EventType
@@ -12652,7 +12712,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -12672,7 +12732,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -12692,7 +12752,7 @@ export namespace Prisma {
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps?: string
     date: Date | string
     time: Date | string
     type: $Enums.EventType
@@ -12708,7 +12768,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -12724,7 +12784,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -13011,7 +13071,7 @@ export namespace Prisma {
 
   export type ReviewCreateInput = {
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     isValid: DetailTransactionCreateNestedOneWithoutReviewInput
     event: EventCreateNestedOneWithoutReviewInput
     user: UserCreateNestedOneWithoutReviewInput
@@ -13021,7 +13081,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     transactionId: number
@@ -13030,7 +13090,7 @@ export namespace Prisma {
 
   export type ReviewUpdateInput = {
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     isValid?: DetailTransactionUpdateOneRequiredWithoutReviewNestedInput
     event?: EventUpdateOneRequiredWithoutReviewNestedInput
     user?: UserUpdateOneRequiredWithoutReviewNestedInput
@@ -13040,7 +13100,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     eventId?: IntFieldUpdateOperationsInput | number
     transactionId?: IntFieldUpdateOperationsInput | number
@@ -13050,7 +13110,7 @@ export namespace Prisma {
   export type ReviewCreateManyInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     transactionId: number
@@ -13059,13 +13119,13 @@ export namespace Prisma {
 
   export type ReviewUpdateManyMutationInput = {
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
   }
 
   export type ReviewUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     eventId?: IntFieldUpdateOperationsInput | number
     transactionId?: IntFieldUpdateOperationsInput | number
@@ -13168,6 +13228,7 @@ export namespace Prisma {
   export type referralVoucherCreateInput = {
     createdAt?: Date | string
     expiresAt: Date | string
+    isValid?: boolean
     discount?: TransactionCreateNestedManyWithoutVoucherInput
     user: UserCreateNestedOneWithoutUserIdInput
   }
@@ -13177,12 +13238,14 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     expiresAt: Date | string
+    isValid?: boolean
     discount?: TransactionUncheckedCreateNestedManyWithoutVoucherInput
   }
 
   export type referralVoucherUpdateInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
     discount?: TransactionUpdateManyWithoutVoucherNestedInput
     user?: UserUpdateOneRequiredWithoutUserIdNestedInput
   }
@@ -13192,6 +13255,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
     discount?: TransactionUncheckedUpdateManyWithoutVoucherNestedInput
   }
 
@@ -13200,11 +13264,13 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     expiresAt: Date | string
+    isValid?: boolean
   }
 
   export type referralVoucherUpdateManyMutationInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type referralVoucherUncheckedUpdateManyInput = {
@@ -13212,12 +13278,14 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type userPointsCreateInput = {
     points?: number
     expiresAt: Date | string
     createdAt?: Date | string
+    isValid?: boolean
     discount?: TransactionCreateNestedManyWithoutPointsInput
     user: UserCreateNestedOneWithoutUserPointsInput
   }
@@ -13228,6 +13296,7 @@ export namespace Prisma {
     expiresAt: Date | string
     createdAt?: Date | string
     userId: string
+    isValid?: boolean
     discount?: TransactionUncheckedCreateNestedManyWithoutPointsInput
   }
 
@@ -13235,6 +13304,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
     discount?: TransactionUpdateManyWithoutPointsNestedInput
     user?: UserUpdateOneRequiredWithoutUserPointsNestedInput
   }
@@ -13245,6 +13315,7 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
     discount?: TransactionUncheckedUpdateManyWithoutPointsNestedInput
   }
 
@@ -13254,12 +13325,14 @@ export namespace Prisma {
     expiresAt: Date | string
     createdAt?: Date | string
     userId: string
+    isValid?: boolean
   }
 
   export type userPointsUpdateManyMutationInput = {
     points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type userPointsUncheckedUpdateManyInput = {
@@ -13268,6 +13341,7 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -13462,7 +13536,7 @@ export namespace Prisma {
     category?: SortOrder
     location?: SortOrder
     venue?: SortOrder
-    mapURL?: SortOrder
+    maps?: SortOrder
     date?: SortOrder
     time?: SortOrder
     type?: SortOrder
@@ -13484,7 +13558,7 @@ export namespace Prisma {
     category?: SortOrder
     location?: SortOrder
     venue?: SortOrder
-    mapURL?: SortOrder
+    maps?: SortOrder
     date?: SortOrder
     time?: SortOrder
     type?: SortOrder
@@ -13501,7 +13575,7 @@ export namespace Prisma {
     category?: SortOrder
     location?: SortOrder
     venue?: SortOrder
-    mapURL?: SortOrder
+    maps?: SortOrder
     date?: SortOrder
     time?: SortOrder
     type?: SortOrder
@@ -13828,6 +13902,7 @@ export namespace Prisma {
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
+
   export type TransactionScalarRelationFilter = {
     is?: TransactionWhereInput
     isNot?: TransactionWhereInput
@@ -13871,6 +13946,13 @@ export namespace Prisma {
     ticketId?: SortOrder
   }
 
+  export type EnumRatingsFilter<$PrismaModel = never> = {
+    equals?: $Enums.Ratings | EnumRatingsFieldRefInput<$PrismaModel>
+    in?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    not?: NestedEnumRatingsFilter<$PrismaModel> | $Enums.Ratings
+  }
+
   export type DetailTransactionScalarRelationFilter = {
     is?: DetailTransactionWhereInput
     isNot?: DetailTransactionWhereInput
@@ -13893,7 +13975,6 @@ export namespace Prisma {
 
   export type ReviewAvgOrderByAggregateInput = {
     id?: SortOrder
-    rating?: SortOrder
     eventId?: SortOrder
     transactionId?: SortOrder
     ticketId?: SortOrder
@@ -13921,10 +14002,19 @@ export namespace Prisma {
 
   export type ReviewSumOrderByAggregateInput = {
     id?: SortOrder
-    rating?: SortOrder
     eventId?: SortOrder
     transactionId?: SortOrder
     ticketId?: SortOrder
+  }
+
+  export type EnumRatingsWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Ratings | EnumRatingsFieldRefInput<$PrismaModel>
+    in?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    not?: NestedEnumRatingsWithAggregatesFilter<$PrismaModel> | $Enums.Ratings
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRatingsFilter<$PrismaModel>
+    _max?: NestedEnumRatingsFilter<$PrismaModel>
   }
 
   export type ReferralVoucherListRelationFilter = {
@@ -13985,6 +14075,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     expiresAt?: SortOrder
+    isValid?: SortOrder
   }
 
   export type referralVoucherAvgOrderByAggregateInput = {
@@ -13996,6 +14087,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     expiresAt?: SortOrder
+    isValid?: SortOrder
   }
 
   export type referralVoucherMinOrderByAggregateInput = {
@@ -14003,6 +14095,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     expiresAt?: SortOrder
+    isValid?: SortOrder
   }
 
   export type referralVoucherSumOrderByAggregateInput = {
@@ -14015,6 +14108,7 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
+    isValid?: SortOrder
   }
 
   export type userPointsAvgOrderByAggregateInput = {
@@ -14028,6 +14122,7 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
+    isValid?: SortOrder
   }
 
   export type userPointsMinOrderByAggregateInput = {
@@ -14036,6 +14131,7 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     userId?: SortOrder
+    isValid?: SortOrder
   }
 
   export type userPointsSumOrderByAggregateInput = {
@@ -14683,6 +14779,10 @@ export namespace Prisma {
     connect?: TicketWhereUniqueInput
   }
 
+  export type EnumRatingsFieldUpdateOperationsInput = {
+    set?: $Enums.Ratings
+  }
+
   export type DetailTransactionUpdateOneRequiredWithoutReviewNestedInput = {
     create?: XOR<DetailTransactionCreateWithoutReviewInput, DetailTransactionUncheckedCreateWithoutReviewInput>
     connectOrCreate?: DetailTransactionCreateOrConnectWithoutReviewInput
@@ -15258,13 +15358,30 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumRatingsFilter<$PrismaModel = never> = {
+    equals?: $Enums.Ratings | EnumRatingsFieldRefInput<$PrismaModel>
+    in?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    not?: NestedEnumRatingsFilter<$PrismaModel> | $Enums.Ratings
+  }
+
+  export type NestedEnumRatingsWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Ratings | EnumRatingsFieldRefInput<$PrismaModel>
+    in?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Ratings[] | ListEnumRatingsFieldRefInput<$PrismaModel>
+    not?: NestedEnumRatingsWithAggregatesFilter<$PrismaModel> | $Enums.Ratings
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRatingsFilter<$PrismaModel>
+    _max?: NestedEnumRatingsFilter<$PrismaModel>
+  }
+
   export type EventCreateWithoutPromotorInput = {
     title: string
     description: string
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps?: string
     date: Date | string
     time: Date | string
     type: $Enums.EventType
@@ -15283,7 +15400,7 @@ export namespace Prisma {
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps?: string
     date: Date | string
     time: Date | string
     type: $Enums.EventType
@@ -15370,7 +15487,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFilter<"Event"> | $Enums.EventCategory
     location?: EnumLocationFilter<"Event"> | $Enums.Location
     venue?: StringFilter<"Event"> | string
-    mapURL?: StringFilter<"Event"> | string
+    maps?: StringFilter<"Event"> | string
     date?: DateTimeFilter<"Event"> | Date | string
     time?: DateTimeFilter<"Event"> | Date | string
     type?: EnumEventTypeFilter<"Event"> | $Enums.EventType
@@ -15416,8 +15533,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
     ticket?: TicketCreateNestedManyWithoutPromotorInput
   }
 
@@ -15426,8 +15543,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
     ticket?: TicketUncheckedCreateNestedManyWithoutPromotorInput
   }
 
@@ -15502,7 +15619,7 @@ export namespace Prisma {
 
   export type ReviewCreateWithoutEventInput = {
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     isValid: DetailTransactionCreateNestedOneWithoutReviewInput
     user: UserCreateNestedOneWithoutReviewInput
     Ticket?: TicketCreateNestedOneWithoutReviewInput
@@ -15511,7 +15628,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateWithoutEventInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     transactionId: number
     ticketId?: number | null
@@ -15622,7 +15739,7 @@ export namespace Prisma {
     NOT?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
     id?: IntFilter<"Review"> | number
     desc?: StringNullableFilter<"Review"> | string | null
-    rating?: IntFilter<"Review"> | number
+    rating?: EnumRatingsFilter<"Review"> | $Enums.Ratings
     userId?: StringFilter<"Review"> | string
     eventId?: IntFilter<"Review"> | number
     transactionId?: IntFilter<"Review"> | number
@@ -15633,8 +15750,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
     event?: EventCreateNestedManyWithoutPromotorInput
   }
 
@@ -15643,8 +15760,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
     event?: EventUncheckedCreateNestedManyWithoutPromotorInput
   }
 
@@ -15659,7 +15776,7 @@ export namespace Prisma {
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps?: string
     date: Date | string
     time: Date | string
     type: $Enums.EventType
@@ -15678,7 +15795,7 @@ export namespace Prisma {
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps?: string
     date: Date | string
     time: Date | string
     type: $Enums.EventType
@@ -15767,7 +15884,7 @@ export namespace Prisma {
 
   export type ReviewCreateWithoutTicketInput = {
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     isValid: DetailTransactionCreateNestedOneWithoutReviewInput
     event: EventCreateNestedOneWithoutReviewInput
     user: UserCreateNestedOneWithoutReviewInput
@@ -15776,7 +15893,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateWithoutTicketInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     transactionId: number
@@ -15839,7 +15956,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -15858,7 +15975,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -16035,6 +16152,7 @@ export namespace Prisma {
     points?: number
     expiresAt: Date | string
     createdAt?: Date | string
+    isValid?: boolean
     user: UserCreateNestedOneWithoutUserPointsInput
   }
 
@@ -16044,6 +16162,7 @@ export namespace Prisma {
     expiresAt: Date | string
     createdAt?: Date | string
     userId: string
+    isValid?: boolean
   }
 
   export type userPointsCreateOrConnectWithoutDiscountInput = {
@@ -16054,6 +16173,7 @@ export namespace Prisma {
   export type referralVoucherCreateWithoutDiscountInput = {
     createdAt?: Date | string
     expiresAt: Date | string
+    isValid?: boolean
     user: UserCreateNestedOneWithoutUserIdInput
   }
 
@@ -16062,6 +16182,7 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     expiresAt: Date | string
+    isValid?: boolean
   }
 
   export type referralVoucherCreateOrConnectWithoutDiscountInput = {
@@ -16179,6 +16300,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutUserPointsNestedInput
   }
 
@@ -16188,6 +16310,7 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type referralVoucherUpsertWithoutDiscountInput = {
@@ -16204,6 +16327,7 @@ export namespace Prisma {
   export type referralVoucherUpdateWithoutDiscountInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutUserIdNestedInput
   }
 
@@ -16212,11 +16336,12 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReviewCreateWithoutIsValidInput = {
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     event: EventCreateNestedOneWithoutReviewInput
     user: UserCreateNestedOneWithoutReviewInput
     Ticket?: TicketCreateNestedOneWithoutReviewInput
@@ -16225,7 +16350,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateWithoutIsValidInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     ticketId?: number | null
@@ -16281,7 +16406,7 @@ export namespace Prisma {
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps?: string
     date: Date | string
     time: Date | string
     type: $Enums.EventType
@@ -16300,7 +16425,7 @@ export namespace Prisma {
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps?: string
     date: Date | string
     time: Date | string
     type: $Enums.EventType
@@ -16430,7 +16555,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -16449,7 +16574,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -16533,7 +16658,7 @@ export namespace Prisma {
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps?: string
     date: Date | string
     time: Date | string
     type: $Enums.EventType
@@ -16552,7 +16677,7 @@ export namespace Prisma {
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps?: string
     date: Date | string
     time: Date | string
     type: $Enums.EventType
@@ -16679,7 +16804,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -16698,7 +16823,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -16837,6 +16962,7 @@ export namespace Prisma {
   export type referralVoucherCreateWithoutUserInput = {
     createdAt?: Date | string
     expiresAt: Date | string
+    isValid?: boolean
     discount?: TransactionCreateNestedManyWithoutVoucherInput
   }
 
@@ -16844,6 +16970,7 @@ export namespace Prisma {
     id?: number
     createdAt?: Date | string
     expiresAt: Date | string
+    isValid?: boolean
     discount?: TransactionUncheckedCreateNestedManyWithoutVoucherInput
   }
 
@@ -16861,6 +16988,7 @@ export namespace Prisma {
     points?: number
     expiresAt: Date | string
     createdAt?: Date | string
+    isValid?: boolean
     discount?: TransactionCreateNestedManyWithoutPointsInput
   }
 
@@ -16869,6 +16997,7 @@ export namespace Prisma {
     points?: number
     expiresAt: Date | string
     createdAt?: Date | string
+    isValid?: boolean
     discount?: TransactionUncheckedCreateNestedManyWithoutPointsInput
   }
 
@@ -16884,7 +17013,7 @@ export namespace Prisma {
 
   export type ReviewCreateWithoutUserInput = {
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     isValid: DetailTransactionCreateNestedOneWithoutReviewInput
     event: EventCreateNestedOneWithoutReviewInput
     Ticket?: TicketCreateNestedOneWithoutReviewInput
@@ -16893,7 +17022,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateWithoutUserInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     eventId: number
     transactionId: number
     ticketId?: number | null
@@ -16949,6 +17078,7 @@ export namespace Prisma {
     userId?: StringFilter<"referralVoucher"> | string
     createdAt?: DateTimeFilter<"referralVoucher"> | Date | string
     expiresAt?: DateTimeFilter<"referralVoucher"> | Date | string
+    isValid?: BoolFilter<"referralVoucher"> | boolean
   }
 
   export type userPointsUpsertWithWhereUniqueWithoutUserInput = {
@@ -16976,6 +17106,7 @@ export namespace Prisma {
     expiresAt?: DateTimeFilter<"userPoints"> | Date | string
     createdAt?: DateTimeFilter<"userPoints"> | Date | string
     userId?: StringFilter<"userPoints"> | string
+    isValid?: BoolFilter<"userPoints"> | boolean
   }
 
   export type ReviewUpsertWithWhereUniqueWithoutUserInput = {
@@ -17267,7 +17398,7 @@ export namespace Prisma {
     category: $Enums.EventCategory
     location: $Enums.Location
     venue: string
-    mapURL: string
+    maps?: string
     date: Date | string
     time: Date | string
     type: $Enums.EventType
@@ -17294,7 +17425,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -17313,7 +17444,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -17332,7 +17463,7 @@ export namespace Prisma {
     category?: EnumEventCategoryFieldUpdateOperationsInput | $Enums.EventCategory
     location?: EnumLocationFieldUpdateOperationsInput | $Enums.Location
     venue?: StringFieldUpdateOperationsInput | string
-    mapURL?: StringFieldUpdateOperationsInput | string
+    maps?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
@@ -17404,7 +17535,7 @@ export namespace Prisma {
   export type ReviewCreateManyEventInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     transactionId: number
     ticketId?: number | null
@@ -17475,7 +17606,7 @@ export namespace Prisma {
 
   export type ReviewUpdateWithoutEventInput = {
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     isValid?: DetailTransactionUpdateOneRequiredWithoutReviewNestedInput
     user?: UserUpdateOneRequiredWithoutReviewNestedInput
     Ticket?: TicketUpdateOneWithoutReviewNestedInput
@@ -17484,7 +17615,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateWithoutEventInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     transactionId?: IntFieldUpdateOperationsInput | number
     ticketId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -17493,7 +17624,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateManyWithoutEventInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     transactionId?: IntFieldUpdateOperationsInput | number
     ticketId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -17526,7 +17657,7 @@ export namespace Prisma {
   export type ReviewCreateManyTicketInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     transactionId: number
@@ -17608,7 +17739,7 @@ export namespace Prisma {
 
   export type ReviewUpdateWithoutTicketInput = {
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     isValid?: DetailTransactionUpdateOneRequiredWithoutReviewNestedInput
     event?: EventUpdateOneRequiredWithoutReviewNestedInput
     user?: UserUpdateOneRequiredWithoutReviewNestedInput
@@ -17617,7 +17748,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateWithoutTicketInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     eventId?: IntFieldUpdateOperationsInput | number
     transactionId?: IntFieldUpdateOperationsInput | number
@@ -17626,7 +17757,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateManyWithoutTicketInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     eventId?: IntFieldUpdateOperationsInput | number
     transactionId?: IntFieldUpdateOperationsInput | number
@@ -17664,7 +17795,7 @@ export namespace Prisma {
   export type ReviewCreateManyIsValidInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     userId: string
     eventId: number
     ticketId?: number | null
@@ -17672,7 +17803,7 @@ export namespace Prisma {
 
   export type ReviewUpdateWithoutIsValidInput = {
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     event?: EventUpdateOneRequiredWithoutReviewNestedInput
     user?: UserUpdateOneRequiredWithoutReviewNestedInput
     Ticket?: TicketUpdateOneWithoutReviewNestedInput
@@ -17681,7 +17812,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateWithoutIsValidInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     eventId?: IntFieldUpdateOperationsInput | number
     ticketId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -17690,7 +17821,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateManyWithoutIsValidInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     userId?: StringFieldUpdateOperationsInput | string
     eventId?: IntFieldUpdateOperationsInput | number
     ticketId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -17717,6 +17848,7 @@ export namespace Prisma {
     id?: number
     createdAt?: Date | string
     expiresAt: Date | string
+    isValid?: boolean
   }
 
   export type userPointsCreateManyUserInput = {
@@ -17724,12 +17856,13 @@ export namespace Prisma {
     points?: number
     expiresAt: Date | string
     createdAt?: Date | string
+    isValid?: boolean
   }
 
   export type ReviewCreateManyUserInput = {
     id?: number
     desc?: string | null
-    rating?: number
+    rating: $Enums.Ratings
     eventId: number
     transactionId: number
     ticketId?: number | null
@@ -17790,6 +17923,7 @@ export namespace Prisma {
   export type referralVoucherUpdateWithoutUserInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
     discount?: TransactionUpdateManyWithoutVoucherNestedInput
   }
 
@@ -17797,6 +17931,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
     discount?: TransactionUncheckedUpdateManyWithoutVoucherNestedInput
   }
 
@@ -17804,12 +17939,14 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type userPointsUpdateWithoutUserInput = {
     points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
     discount?: TransactionUpdateManyWithoutPointsNestedInput
   }
 
@@ -17818,6 +17955,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
     discount?: TransactionUncheckedUpdateManyWithoutPointsNestedInput
   }
 
@@ -17826,11 +17964,12 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isValid?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReviewUpdateWithoutUserInput = {
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     isValid?: DetailTransactionUpdateOneRequiredWithoutReviewNestedInput
     event?: EventUpdateOneRequiredWithoutReviewNestedInput
     Ticket?: TicketUpdateOneWithoutReviewNestedInput
@@ -17839,7 +17978,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     eventId?: IntFieldUpdateOperationsInput | number
     transactionId?: IntFieldUpdateOperationsInput | number
     ticketId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -17848,7 +17987,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     desc?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: IntFieldUpdateOperationsInput | number
+    rating?: EnumRatingsFieldUpdateOperationsInput | $Enums.Ratings
     eventId?: IntFieldUpdateOperationsInput | number
     transactionId?: IntFieldUpdateOperationsInput | number
     ticketId?: NullableIntFieldUpdateOperationsInput | number | null
