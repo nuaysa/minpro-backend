@@ -1,24 +1,17 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
 import axios from "axios";
-// import Midtrans from "midtrans-client"
-
-// let snap = new Midtrans.Snap({
-//   isProduction: false,
-//   serverKey: process.env.SERVER,
-//   clientKey: process.env.NEXT_PUBLIC_CLIENT,
-// })
 
 export class TransactionController {
   async createOrder(req: Request, res: Response) {
     try {
       const { id, userVoucher, userPoints, qty } = req.body;
       const { ticketId } = req.params;
-      const userId = "9269bda0-b0ef-40ac-aea2-21a6dd5462c8"
-      // const userId = req.user?.id?.toString();
-      // if (!userId) {
-      //   res.status(400).send({ message: "User ID is required" });
-      // }
+      // const userId = "9269bda0-b0ef-40ac-aea2-21a6dd5462c8"
+      const userId = req.user?.id?.toString();
+      if (!userId) {
+        res.status(400).send({ message: "User ID is required" });
+      }
 
       var discount: number = 0;
       const expiredAt = new Date(new Date().getTime() + 10 * 60 * 1000);
@@ -157,47 +150,6 @@ export class TransactionController {
     }
   }
 
-  // async createDetail(req: Request, res: Response) {
-  //   try {
-  //     const { transactionId } = req.params;
-
-  //     const transaction = await prisma.transaction.findUnique({
-  //       where: { id: +transactionId },
-  //       select: { id: true, status: true, userId: true, ticketId: true },
-  //     });
-
-  //     const ticket = await prisma.ticket.findFirst({
-  //       where: { id: transaction?.ticketId },
-  //       select: { eventId: true },
-  //     });
-
-  //     const event = await prisma.event.findFirst({
-  //       where: { id: ticket?.eventId },
-  //       select: { id: true },
-  //     });
-  //     if (!transaction || transaction.status !== "Paid") {
-  //         res.status(400).send({ message: "Invalid or unpaid transaction" });
-  //     }
-
-  //     if (transaction?.userId !== req.user?.id.toString()) {
-  //         res.status(403).send({ message: "Unauthorized access to this transaction" });
-  //     }
-
-  //     const detail = await prisma.detailTransaction.create({
-  //       data: {
-  //         transactionId: transaction?.id!,
-  //         ticketId: transaction?.ticketId!,
-  //         eventId: ticket?.eventId!,
-  //         reviewStatus: false,
-  //       },
-  //     });
-
-  //     res.status(200).send({ detail });
-  //   } catch (err) {
-  //     console.error(err);
-  //     res.status(500).send({ message: "An error occurred", error: err });
-  //   }
-  // }
 
 async getDetail(req: Request, res: Response){
   try{
