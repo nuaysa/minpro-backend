@@ -157,47 +157,47 @@ export class TransactionController {
     }
   }
 
-  async createDetail(req: Request, res: Response) {
-    try {
-      const { transactionId } = req.params;
+  // async createDetail(req: Request, res: Response) {
+  //   try {
+  //     const { transactionId } = req.params;
 
-      const transaction = await prisma.transaction.findUnique({
-        where: { id: +transactionId },
-        select: { id: true, status: true, userId: true, ticketId: true },
-      });
+  //     const transaction = await prisma.transaction.findUnique({
+  //       where: { id: +transactionId },
+  //       select: { id: true, status: true, userId: true, ticketId: true },
+  //     });
 
-      const ticket = await prisma.ticket.findFirst({
-        where: { id: transaction?.ticketId },
-        select: { eventId: true },
-      });
+  //     const ticket = await prisma.ticket.findFirst({
+  //       where: { id: transaction?.ticketId },
+  //       select: { eventId: true },
+  //     });
 
-      const event = await prisma.event.findFirst({
-        where: { id: ticket?.eventId },
-        select: { id: true },
-      });
-      if (!transaction || transaction.status !== "Paid") {
-          res.status(400).send({ message: "Invalid or unpaid transaction" });
-      }
+  //     const event = await prisma.event.findFirst({
+  //       where: { id: ticket?.eventId },
+  //       select: { id: true },
+  //     });
+  //     if (!transaction || transaction.status !== "Paid") {
+  //         res.status(400).send({ message: "Invalid or unpaid transaction" });
+  //     }
 
-      if (transaction?.userId !== req.user?.id.toString()) {
-          res.status(403).send({ message: "Unauthorized access to this transaction" });
-      }
+  //     if (transaction?.userId !== req.user?.id.toString()) {
+  //         res.status(403).send({ message: "Unauthorized access to this transaction" });
+  //     }
 
-      const detail = await prisma.detailTransaction.create({
-        data: {
-          transactionId: transaction?.id!,
-          ticketId: transaction?.ticketId!,
-          eventId: ticket?.eventId!,
-          reviewStatus: false,
-        },
-      });
+  //     const detail = await prisma.detailTransaction.create({
+  //       data: {
+  //         transactionId: transaction?.id!,
+  //         ticketId: transaction?.ticketId!,
+  //         eventId: ticket?.eventId!,
+  //         reviewStatus: false,
+  //       },
+  //     });
 
-      res.status(200).send({ detail });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send({ message: "An error occurred", error: err });
-    }
-  }
+  //     res.status(200).send({ detail });
+  //   } catch (err) {
+  //     console.error(err);
+  //     res.status(500).send({ message: "An error occurred", error: err });
+  //   }
+  // }
 
 async getDetail(req: Request, res: Response){
   try{

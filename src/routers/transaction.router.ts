@@ -14,9 +14,11 @@ export class TransactionRouter {
 
     private initializeRoutes(){
         this.router.post("/:ticketId", this.transactionController.createOrder)
-        this.router.post("/detail/:transactionId", this.transactionController.createDetail)
+        // this.router.post("/detail/:transactionId", this.transactionController.createDetail)
         // this.router.post("/:ticketId", this.transactionController.createOrder)
+        this.router.get("/detail", this.transactionController.getDetail)
     }
+
 
     getRouter(): Router {
         return this.router;

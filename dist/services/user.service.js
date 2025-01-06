@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findUser = void 0;
+exports.findUserByCredentials = exports.findUserLogin = exports.findUser = void 0;
 const prisma_1 = __importDefault(require("../prisma"));
 const findUser = (username, email) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield prisma_1.default.user.findFirst({
@@ -21,3 +21,17 @@ const findUser = (username, email) => __awaiter(void 0, void 0, void 0, function
     return user;
 });
 exports.findUser = findUser;
+const findUserLogin = (username) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield prisma_1.default.user.findFirst({
+        where: { OR: [{ username: username }, { email: username }] },
+    });
+    return user;
+});
+exports.findUserLogin = findUserLogin;
+const findUserByCredentials = (username, password) => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield prisma_1.default.user.findFirst({
+        where: { AND: [{ username: username }, { password: password }] },
+    });
+    return users;
+});
+exports.findUserByCredentials = findUserByCredentials;

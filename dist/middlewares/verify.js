@@ -9,15 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifikasiToken = void 0;
+exports.verifyRole = exports.verifikasiToken = void 0;
 const jsonwebtoken_1 = require("jsonwebtoken");
 const verifikasiToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
         const token = (_a = req.header("Authorization")) === null || _a === void 0 ? void 0 : _a.replace("Bearer ", "");
+        console.log(token);
         if (!token)
             throw { message: "Unauthorize!" };
-        const verified = (0, jsonwebtoken_1.verify)(token, process.env.JWT_KEY);
+        const verified = (0, jsonwebtoken_1.verify)(token, "shhhhh");
+        console.log(verified);
         req.user = verified;
         next();
     }
@@ -27,3 +29,14 @@ const verifikasiToken = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.verifikasiToken = verifikasiToken;
+const verifyRole = (role) => {
+    return (req, res, next) => {
+        const user = req.user;
+        if (!user || user.role !== role) {
+            res.status(403).json({ message: "Access denied, insufficient role" });
+            return;
+        }
+        next();
+    };
+};
+exports.verifyRole = verifyRole;
