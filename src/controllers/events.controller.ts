@@ -124,7 +124,7 @@ export class EventsController {
           slug: slug,
           thumbnail: secure_url,
           promotorId: req.Promotor?.id!
-         
+
         },
       });
       res.status(200).send({ message: "event created !" });

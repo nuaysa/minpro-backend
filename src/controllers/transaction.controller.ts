@@ -6,10 +6,9 @@ import axios from "axios";
 export class TransactionController {
   async createOrder(req: Request, res: Response) {
     try {
-
       const { id, userVoucher, userPoints, qty } = req.body;
       const { ticketId } = req.params;
-//       const userId = "9269bda0-b0ef-40ac-aea2-21a6dd5462c8"
+      // const userId = "9269bda0-b0ef-40ac-aea2-21a6dd5462c8"
       const userId = req.user?.id?.toString();
       if (!userId) {
         res.status(400).send({ message: "User ID is required" });
@@ -48,6 +47,7 @@ export class TransactionController {
           include: { userPoints: true },
         });
       });
+
 
       function formatId(id: number): string {
         return id.toString().padStart(3, "0");
@@ -107,6 +107,13 @@ export class TransactionController {
         discount = discountPoints + discountVoucher;
         return res.status(200).send({ message: "Discount applied successfully" });
       }
+
+      const FinalPrice = TotalPrice - (discount ? discount : 0);
+
+      const order = await prisma.transaction.create({
+        data: { id, basePrice: basePrice!, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId: userId?.toString()!},
+      });
+
 
       const FinalPrice = TotalPrice - (discount ? discount : 0);
 
