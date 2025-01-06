@@ -1,3 +1,4 @@
+
 import { Request, Response } from "express";
 import prisma from "../prisma";
 import axios from "axios";
@@ -46,6 +47,7 @@ export class TransactionController {
           include: { userPoints: true },
         });
       });
+
 
       function formatId(id: number): string {
         return id.toString().padStart(3, "0");
@@ -112,9 +114,20 @@ export class TransactionController {
         data: { id, basePrice: basePrice!, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId: userId?.toString()!},
       });
 
+
+      const FinalPrice = TotalPrice - (discount ? discount : 0);
+
+      const order = await prisma.transaction.create({
+        data: { id, basePrice: basePrice!, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId: userId?.toString()!},
+      });
+
+      const order = await prisma.transaction.create({
+        data: { id, basePrice, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId},
+      });
+//       userId: req.user?.id.toString()!
       const body = {
         transaction_details: {
-          order_id: order.id,
+          order_id: `invoice ${formatId(order.id)}`,
           gross_amount: order.finalPrice,
         },
         expiry: {

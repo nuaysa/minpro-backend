@@ -31,10 +31,10 @@ app.get("/api", ( req : Request, res: Response ) => {
 const userRouter = new UserRouter();
 const eventsRouter = new EventsRouter();
 const authRouter = new AuthRouter();
-const promotorRouter = new PromotorRouter();  
 const transactionRouter = new TransactionRouter();
 const reviewRouter = new ReviewsRouter();
 const callbackRouter = new CallbackRouter()
+
 
 app.use("/api/auth", authRouter.getRouter());
 app.use("/api/users", userRouter.getRouter());
