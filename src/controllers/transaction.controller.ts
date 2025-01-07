@@ -1,3 +1,4 @@
+
 import { Request, Response } from "express";
 import prisma from "../prisma";
 import axios from "axios";
@@ -7,7 +8,6 @@ export class TransactionController {
     try {
       const { id, userVoucher, userPoints, qty } = req.body;
       const { ticketId } = req.params;
-      // const userId = "9269bda0-b0ef-40ac-aea2-21a6dd5462c8"
       const userId = req.user?.id?.toString();
       if (!userId) {
         res.status(400).send({ message: "User ID is required" });
@@ -46,6 +46,7 @@ export class TransactionController {
           include: { userPoints: true },
         });
       });
+
 
       function formatId(id: number): string {
         return id.toString().padStart(3, "0");
@@ -111,10 +112,10 @@ export class TransactionController {
       const order = await prisma.transaction.create({
         data: { id, basePrice: basePrice!, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId: userId?.toString()!},
       });
-
+      
       const body = {
         transaction_details: {
-          order_id: order.id,
+          order_id: `invoice ${formatId(order.id)}`,
           gross_amount: order.finalPrice,
         },
         expiry: {

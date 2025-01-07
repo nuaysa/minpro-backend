@@ -128,7 +128,10 @@ model Transaction {
   qty          Int
   promoQuota   Int               @default(10)
   redirect_url String?
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9fea61b0863a87513be1940f98a7022b1d829e10
   DetailTransaction DetailTransaction[]
   ticket            Ticket              @relation(fields: [ticketId], references: [id])
   user              User                @relation(fields: [userId], references: [id])
@@ -198,7 +201,10 @@ model userPoints {
   createdAt DateTime @default(now())
   userId    String   @unique
   isValid   Boolean  @default(true)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9fea61b0863a87513be1940f98a7022b1d829e10
   discount Transaction[]
   user     User          @relation(fields: [userId], references: [id])
 }

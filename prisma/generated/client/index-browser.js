@@ -173,6 +173,10 @@ exports.Prisma.TransactionScalarFieldEnum = {
   promoQuota: 'promoQuota',
   redirect_url: 'redirect_url'
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9fea61b0863a87513be1940f98a7022b1d829e10
 
 exports.Prisma.DetailTransactionScalarFieldEnum = {
   id: 'id',
