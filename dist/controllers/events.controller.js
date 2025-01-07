@@ -38,7 +38,9 @@ class EventsController {
                 if (location) {
                     filter.location = { equals: location };
                 }
-                const countEvents = yield prisma_1.default.user.aggregate({ _count: { _all: true } });
+                const countEvents = yield prisma_1.default.user.aggregate({
+                    _count: { _all: true },
+                });
                 const totalPage = Math.ceil(countEvents._count._all / +limit);
                 const events = yield prisma_1.default.event.findMany({
                     where: filter,

@@ -27,7 +27,9 @@ export class EventsController {
         filter.location = { equals: location as Location };
       }
 
-      const countEvents = await prisma.user.aggregate({ _count: { _all: true } });
+      const countEvents = await prisma.user.aggregate({
+        _count: { _all: true },
+      });
       const totalPage = Math.ceil(countEvents._count._all / +limit);
 
 
@@ -123,7 +125,7 @@ export class EventsController {
           type,
           slug: slug,
           thumbnail: secure_url,
-          promotorId: req.Promotor?.id!
+          promotorId: req.promotor?.id!
 
         },
       });
@@ -135,7 +137,17 @@ export class EventsController {
   }
   async createTicket(req: Request, res: Response) {
     try {
-      const { price, category, discount, quota, startDate, endDate, isActive, Promotor, eventId } = req.body;
+      const {
+        price,
+        category,
+        discount,
+        quota,
+        startDate,
+        endDate,
+        isActive,
+        Promotor,
+        eventId,
+      } = req.body;
       const status = new Date(endDate) > new Date() ? true : false;
       const parsedStartDate = new Date(`${startDate}T00:00:00.000Z`);
       const parsedEndDate = new Date(`${endDate}T23:59:59.000Z`);
@@ -155,7 +167,7 @@ export class EventsController {
             },
           },
           Promotor: {
-            connect: { id: Promotor }, 
+            connect: { id: Promotor },
           },
         },
       });

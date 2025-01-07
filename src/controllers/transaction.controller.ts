@@ -112,17 +112,6 @@ export class TransactionController {
       const order = await prisma.transaction.create({
         data: { id, basePrice: basePrice!, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId: userId?.toString()!},
       });
-
-
-      const FinalPrice = TotalPrice - (discount ? discount : 0);
-
-      const order = await prisma.transaction.create({
-        data: { id, basePrice: basePrice!, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId: userId?.toString()!},
-      });
-
-      const order = await prisma.transaction.create({
-        data: { id, basePrice, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId},
-      });
       const body = {
         transaction_details: {
           order_id: `invoice ${formatId(order.id)}`,

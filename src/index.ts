@@ -34,6 +34,7 @@ const authRouter = new AuthRouter();
 const transactionRouter = new TransactionRouter();
 const reviewRouter = new ReviewsRouter();
 const callbackRouter = new CallbackRouter()
+const promotorRouter = new PromotorRouter()
 
 
 app.use("/api/auth", authRouter.getRouter());

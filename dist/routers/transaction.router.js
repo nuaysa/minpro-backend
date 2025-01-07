@@ -10,10 +10,15 @@ class TransactionRouter {
         this.initializeRoutes();
     }
     initializeRoutes() {
+<<<<<<< HEAD
+        // this.router.post("/:ticketId", this.transactionController.createOrder)
+        this.router.post("/status", this.transactionController.updateStatus);
+=======
         this.router.post("/:ticketId", this.transactionController.createOrder);
         // this.router.post("/detail/:transactionId", this.transactionController.createDetail)
         // this.router.post("/:ticketId", this.transactionController.createOrder)
         this.router.get("/detail", this.transactionController.getDetail);
+>>>>>>> 9fea61b0863a87513be1940f98a7022b1d829e10
     }
     getRouter() {
         return this.router;
