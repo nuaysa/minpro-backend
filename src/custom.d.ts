@@ -13,7 +13,7 @@ declare global {
     namespace Express {
         export interface Request {
             user?: UserPayload;
-            Promotor?: PromotorPayload; 
+            promotor?: PromotorPayload; 
         }
     }
 }
