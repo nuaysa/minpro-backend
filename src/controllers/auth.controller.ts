@@ -98,17 +98,17 @@ export class AuthController {
   }
   async registerPromotor(req: Request, res: Response) {
     try {
-      const { password, confirmPassword, organisationName, email } = req.body;
+      const { password, confirmPassword, organizationName, email } = req.body;
       if (password != confirmPassword) throw { message: "Password not match!" };
 
-      const promotors = await findPromotor(organisationName, email);
+      const promotors = await findPromotor(organizationName, email);
       if (promotors) throw { message: "organization or email has been used" };
 
       const salt = await genSalt(8);
       const hashPassword = await hash(password, salt);
 
       const newPromotor = await prisma.promotor.create({
-        data: { name: organisationName, email, password: hashPassword },
+        data: { name: organizationName, email, password: hashPassword },
       });
 
       const payload = { id: newPromotor.id, role: newPromotor };
@@ -118,13 +118,13 @@ export class AuthController {
       const templatePath = path.join(__dirname, "../templates", "verify.hbs");
       const templateSource = fs.readFileSync(templatePath, "utf-8");
       const compiledTemplate = handlebars.compile(templateSource);
-      const html = compiledTemplate({ organisationName, link });
+      const html = compiledTemplate({ organizationName, link });
 
       await transportEmail.sendMail({
         from: "suciclarissatiara@gmail.com",
         to: email,
         subject: "welcome to ate!",
-        // html,
+        html,
       });
       res.status(201).send({ message: "Register Successfully" });
     } catch (err) {
