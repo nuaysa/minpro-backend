@@ -13,7 +13,7 @@ export const verifikasiToken = async (
 
     if (!token) throw { message: "Unauthorize!" };
 
-    const verified = verify(token, "shhhhh");
+    const verified = verify(token, process.env.JWT_KEY!)
     console.log(verified);
         req.user = verified as UserPayload;
 
