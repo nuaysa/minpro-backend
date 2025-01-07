@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { PromotorController } from "../controllers/promotor.controller";
 import { verifikasiToken, verifyRole } from "../middlewares/verify";
+import { uploader } from "src/services/uploader";
 
 export class PromotorRouter {
     private promotorController: PromotorController;
@@ -13,10 +14,16 @@ export class PromotorRouter {
     }
 
     private initializeRoutes() {
-        this.router.get("/", verifikasiToken, this.promotorController.getPromotor);
+        this.router.get("/", verifikasiToken, verifyRole("promotor"), this.promotorController.getPromotor);
         this.router.get("/profil", verifikasiToken, this.promotorController.getPromotorId);
         this.router.post("/", this.promotorController.createPromotor);
 
+            // this.router.patch(
+            //   "/avatar",
+            //   verifikasiToken,
+            //   uploader("memoryStorage", "avatar-", "/avatar").single("file"),
+            //   this.promotorController.editAvatar
+            // );
         this.router.patch("/:id", this.promotorController.editPromotor);
         this.router.delete("/:id", this.promotorController.deletePromotor);
         

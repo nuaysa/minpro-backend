@@ -112,7 +112,7 @@ export class TransactionController {
       const order = await prisma.transaction.create({
         data: { id, basePrice: basePrice!, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId: userId?.toString()!},
       });
-      
+
       const body = {
         transaction_details: {
           order_id: `invoice ${formatId(order.id)}`,

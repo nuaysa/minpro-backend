@@ -36,6 +36,7 @@ const reviewRouter = new ReviewsRouter();
 const callbackRouter = new CallbackRouter()
 const promotorRouter = new PromotorRouter()
 
+
 app.use("/api/auth", authRouter.getRouter());
 app.use("/api/users", userRouter.getRouter());
 app.use("/api/promotor", promotorRouter.getRouter());
