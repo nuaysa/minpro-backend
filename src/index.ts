@@ -7,7 +7,7 @@ import { UserRouter } from "./routers/user.router";
 import { verifikasiToken } from "./middlewares/verify";  
 import { verifyRole } from "./middlewares/verify";  
 import { TransactionRouter } from "./routers/transaction.router";
-import { PromotorRouter } from "./routers/promotor.router";
+import { PromotorRouter} from "./routers/promotor.router";
 import { ReviewsRouter } from "./routers/reviews.router";
 import { CallbackRouter } from "./routers/callback.router";
 
@@ -39,7 +39,7 @@ const promotorRouter = new PromotorRouter()
 
 app.use("/api/auth", authRouter.getRouter());
 app.use("/api/users", userRouter.getRouter());
-app.use("/api/promotor", promotorRouter.getRouter());  // Menambahkan rute untuk promotor
+app.use("/api/promotor", promotorRouter.getRouter());
 app.use("/api/events", eventsRouter.getRouter());
 app.use("/api/transaction", transactionRouter.getRouter());
 app.use("/api/review", reviewRouter.getRouter());

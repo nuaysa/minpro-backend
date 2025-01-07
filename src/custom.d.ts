@@ -4,7 +4,6 @@ export type PromotorPayload = {
     id: number;
 }
 
-
 export type UserPayload = {
     id: number;
     role: RoleUser; 
