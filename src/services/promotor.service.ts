@@ -13,11 +13,11 @@ export const findPromotorLogin = async (organizationName: string) => {
   return promotor;
 };
 export const findPromotorByCredentials = async (
-  organisationName: string,
+  organizationName: string,
   password: string
 ) => {
   const promotor = await prisma.promotor.findFirst({
-    where: { AND: [{ name: organisationName }, { password: password }] },
+    where: { AND: [{ name: organizationName }, { password: password }] },
   });
   return promotor;
 };
