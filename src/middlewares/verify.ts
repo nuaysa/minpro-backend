@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
-import { UserPayload } from "../custom";
+import { PromotorPayload, UserPayload } from "../custom";
 
 export const verifikasiToken = async (
   req: Request,
@@ -15,8 +15,7 @@ export const verifikasiToken = async (
 
     const verified = verify(token, "shhhhh");
     console.log(verified);
-    
-    req.user = verified as UserPayload;
+        req.user = verified as UserPayload;
 
     next();
   } catch (err) {

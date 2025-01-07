@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
 import { Prisma } from "../../prisma/generated/client";
+import { cloudinaryUpload } from "src/services/cloudinary";
 
 export class UserController {
   async getUsers(req: Request, res: Response) {
@@ -67,4 +68,19 @@ export class UserController {
       res.status(400).send(err);
     }
   }
+  // async editAvatar(req: Request, res: Response){
+  //     try {
+  //       if (!req.file) throw { message:"file empty" }
+  //       const { secure_url } = await cloudinaryUpload(req.file, "avatar")
+  
+  //       await prisma.user.update({
+  //         data: { avatar: secure_url},
+  //         where: { id: req.user?.id},
+  //       })
+  //       res.status(200).send({ message: "avatar edited !"})
+  //     } catch (err) {
+  //       console.log(err);
+  //       res.status(400).send(err);
+  //     }
+  //   }
 }

@@ -35,7 +35,9 @@ class EventsController {
                 if (location) {
                     filter.location = { equals: location };
                 }
-                const countEvents = yield prisma_1.default.user.aggregate({ _count: { _all: true } });
+                const countEvents = yield prisma_1.default.user.aggregate({
+                    _count: { _all: true },
+                });
                 const totalPage = Math.ceil(countEvents._count._all / +limit);
                 const events = yield prisma_1.default.event.findMany({
                     where: filter,
@@ -82,13 +84,18 @@ class EventsController {
     }
     addNewEvent(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a;
             try {
                 if (!req.file)
                     throw { message: "thumbnail empty" };
                 const { secure_url } = yield (0, cloudinary_1.cloudinaryUpload)(req.file, "thumbnail");
-                const { title, description, category, date, time, location, venue, mapURL, type } = req.body;
+                const { title, description, category, date, time, location, type, venue, mapURL, promotorId, } = req.body;
                 const slug = (0, slug_1.createSlug)(title);
+                const isPromotorExists = yield prisma_1.default.promotor.findUnique({
+                    where: { id: +promotorId },
+                });
+                if (!isPromotorExists) {
+                    throw new Error("Promotor ID does not exist");
+                }
                 yield prisma_1.default.event.create({
                     data: {
                         title,
@@ -102,10 +109,44 @@ class EventsController {
                         type,
                         slug: slug,
                         thumbnail: secure_url,
-                        promotorId: (_a = req.Promotor) === null || _a === void 0 ? void 0 : _a.id
+                        promotorId: +promotorId,
+                        // promotorId: req.Promotor?.id!
                     },
                 });
                 res.status(200).send({ message: "event created !" });
+            }
+            catch (err) {
+                console.log(err);
+                res.status(400).send(err);
+            }
+        });
+    }
+    createTicket(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { price, category, discount, quota, startDate, endDate, isActive, Promotor, eventId, } = req.body;
+                const status = new Date(endDate) > new Date() ? true : false;
+                const parsedStartDate = new Date(`${startDate}T00:00:00.000Z`);
+                const parsedEndDate = new Date(`${endDate}T23:59:59.000Z`);
+                const ticket = yield prisma_1.default.ticket.create({
+                    data: {
+                        price: price,
+                        discount: discount,
+                        quota: quota,
+                        startDate: parsedStartDate,
+                        endDate: parsedEndDate,
+                        category: category,
+                        isActive: status,
+                        event: {
+                            connect: {
+                                id: eventId,
+                            },
+                        },
+                        Promotor: {
+                            connect: { id: Promotor },
+                        },
+                    },
+                });
             }
             catch (err) {
                 console.log(err);

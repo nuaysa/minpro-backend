@@ -5268,13 +5268,11 @@ export namespace Prisma {
     userPoints: number | null
     discount: number | null
     ticketId: number | null
-
     createdAt: Date | null
     expiresAt: Date | null
     qty: number | null
     promoQuota: number | null
     redirect_url: string | null
-
   }
 
   export type TransactionMaxAggregateOutputType = {
@@ -5493,7 +5491,6 @@ export namespace Prisma {
     userPoints: number | null
     discount: number | null
     ticketId: number
-
     createdAt: Date
     expiresAt: Date
     qty: number
@@ -5555,7 +5552,6 @@ export namespace Prisma {
     userPoints?: boolean
     discount?: boolean
     ticketId?: boolean
-
     createdAt?: boolean
     expiresAt?: boolean
     qty?: boolean
@@ -12547,8 +12543,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
     event?: EventCreateNestedManyWithoutPromotorInput
     ticket?: TicketCreateNestedManyWithoutPromotorInput
   }
@@ -12558,8 +12554,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
     event?: EventUncheckedCreateNestedManyWithoutPromotorInput
     ticket?: TicketUncheckedCreateNestedManyWithoutPromotorInput
   }
@@ -12590,8 +12586,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
   }
 
   export type PromotorUpdateManyMutationInput = {
@@ -13751,7 +13747,6 @@ export namespace Prisma {
     userPoints?: SortOrder
     discount?: SortOrder
     ticketId?: SortOrder
-
     createdAt?: SortOrder
     expiresAt?: SortOrder
     qty?: SortOrder
@@ -13833,6 +13828,7 @@ export namespace Prisma {
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
+
   export type TransactionScalarRelationFilter = {
     is?: TransactionWhereInput
     isNot?: TransactionWhereInput
@@ -14511,9 +14507,11 @@ export namespace Prisma {
     multiply?: number
     divide?: number
   }
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
+
   export type DetailTransactionUpdateManyWithoutTransactionNestedInput = {
     create?: XOR<DetailTransactionCreateWithoutTransactionInput, DetailTransactionUncheckedCreateWithoutTransactionInput> | DetailTransactionCreateWithoutTransactionInput[] | DetailTransactionUncheckedCreateWithoutTransactionInput[]
     connectOrCreate?: DetailTransactionCreateOrConnectWithoutTransactionInput | DetailTransactionCreateOrConnectWithoutTransactionInput[]
@@ -15193,7 +15191,6 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -15420,8 +15417,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
     ticket?: TicketCreateNestedManyWithoutPromotorInput
   }
 
@@ -15430,8 +15427,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
     ticket?: TicketUncheckedCreateNestedManyWithoutPromotorInput
   }
 
@@ -15637,8 +15634,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
     event?: EventCreateNestedManyWithoutPromotorInput
   }
 
@@ -15647,8 +15644,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
-    avatar: string
-    isVerify: boolean
+    avatar?: string
+    isVerify?: boolean
     event?: EventUncheckedCreateNestedManyWithoutPromotorInput
   }
 
@@ -16799,7 +16796,6 @@ export namespace Prisma {
     finalPrice: number
     status?: $Enums.TransactionStatus
     discount?: number | null
-
     createdAt?: Date | string
     expiresAt: Date | string
     qty: number

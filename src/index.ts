@@ -5,8 +5,8 @@ import cookieParser from "cookie-parser";
 import { AuthRouter } from "./routers/auth.router";
 import { UserRouter } from "./routers/user.router";
 import { PromotorRouter } from "./routers/promotor.router";  
-import { verifikasiToken } from "./middlewares/verify";  
-import { verifyRole } from "./middlewares/verify";  
+// import { verifikasiToken } from "./middlewares/verify";  
+// import { verifyRole } from "./middlewares/verify";  
 import { TransactionRouter } from "./routers/transaction.router";
 
 const PORT: number = 8000;

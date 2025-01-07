@@ -25,7 +25,9 @@ export class EventsController {
         filter.location = { equals: location as Location };
       }
 
-      const countEvents = await prisma.user.aggregate({ _count: { _all: true } });
+      const countEvents = await prisma.user.aggregate({
+        _count: { _all: true },
+      });
       const totalPage = Math.ceil(countEvents._count._all / +limit);
 
       const events = await prisma.event.findMany({
@@ -72,7 +74,18 @@ export class EventsController {
     try {
       if (!req.file) throw { message: "thumbnail empty" };
       const { secure_url } = await cloudinaryUpload(req.file, "thumbnail");
-      const { title, description, category, date, time, location, type, venue, mapURL, promotorId } = req.body;
+      const {
+        title,
+        description,
+        category,
+        date,
+        time,
+        location,
+        type,
+        venue,
+        mapURL,
+        promotorId,
+      } = req.body;
       const slug = createSlug(title);
 
       const isPromotorExists = await prisma.promotor.findUnique({
@@ -110,7 +123,17 @@ export class EventsController {
 
   async createTicket(req: Request, res: Response) {
     try {
-      const { price, category, discount, quota, startDate, endDate, isActive, Promotor, eventId } = req.body;
+      const {
+        price,
+        category,
+        discount,
+        quota,
+        startDate,
+        endDate,
+        isActive,
+        Promotor,
+        eventId,
+      } = req.body;
       const status = new Date(endDate) > new Date() ? true : false;
       const parsedStartDate = new Date(`${startDate}T00:00:00.000Z`);
       const parsedEndDate = new Date(`${endDate}T23:59:59.000Z`);
@@ -130,8 +153,13 @@ export class EventsController {
             },
           },
           Promotor: {
-            connect: { id: Promotor }, 
+            connect: { id: Promotor },
           },
         },
       });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
 }
