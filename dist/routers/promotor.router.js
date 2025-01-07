@@ -11,7 +11,11 @@ class PromotorRouter {
         this.initializeRoutes();
     }
     initializeRoutes() {
+<<<<<<< HEAD
         this.router.get("/", verify_1.verifikasiToken, (0, verify_1.verifyRole)("promotor"), this.promotorController.getPromotor);
+=======
+        this.router.get("/", verify_1.verifikasiToken, this.promotorController.getPromotor);
+>>>>>>> 9fea61b0863a87513be1940f98a7022b1d829e10
         this.router.get("/profil", verify_1.verifikasiToken, this.promotorController.getPromotorId);
         this.router.post("/", this.promotorController.createPromotor);
         this.router.patch("/:id", this.promotorController.editPromotor);

@@ -19,7 +19,7 @@ export class PromotorController {
       });
       const total_page = Math.ceil(+countPromotor._count._all / +limit);
       const promotors = await prisma.promotor.findMany({
-        where: filter,
+        // where: filter,
         orderBy: { id: "asc" },
         take: +limit,
         skip: +limit * (+page - 1),

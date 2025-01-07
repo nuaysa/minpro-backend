@@ -31,7 +31,11 @@ class PromotorController {
                 });
                 const total_page = Math.ceil(+countPromotor._count._all / +limit);
                 const promotors = yield prisma_1.default.promotor.findMany({
+<<<<<<< HEAD
                     where: filter,
+=======
+                    // where: filter,
+>>>>>>> 9fea61b0863a87513be1940f98a7022b1d829e10
                     orderBy: { id: "asc" },
                     take: +limit,
                     skip: +limit * (+page - 1),

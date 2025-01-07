@@ -2,8 +2,7 @@ import { RoleUser } from "../prisma/generated/client"; // Import RoleUser jika d
 
 export type PromotorPayload = {
     id: number;
-    role: RolePromotor;
-};
+}
 
 
 export type UserPayload = {

@@ -178,5 +178,79 @@ class AuthController {
             }
         });
     }
+    registerPromotor(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { password, confirmPassword, organisationName, email } = req.body;
+                if (password != confirmPassword)
+                    throw { message: "Password not match!" };
+                const promotors = yield (0, promotor_service_1.findPromotor)(organisationName, email);
+                if (promotors)
+                    throw { message: "organization or email has been used" };
+                const salt = yield (0, bcrypt_1.genSalt)(8);
+                const hashPassword = yield (0, bcrypt_1.hash)(password, salt);
+                const newPromotor = yield prisma_1.default.promotor.create({
+                    data: { name: organisationName, email, password: hashPassword },
+                });
+                const payload = { id: newPromotor.id, role: newPromotor };
+                const token = (0, jsonwebtoken_1.sign)(payload, process.env.JWT_KEY, { expiresIn: "7d" });
+                const link = `${process.env.BASE_URL_FE}/verify/${token}`;
+                const templatePath = path_1.default.join(__dirname, "../templates", "verify.hbs");
+                const templateSource = fs_1.default.readFileSync(templatePath, "utf-8");
+                const compiledTemplate = handlebars_1.default.compile(templateSource);
+                const html = compiledTemplate({ organisationName, link });
+                yield mailer_1.transportEmail.sendMail({
+                    from: "suciclarissatiara@gmail.com",
+                    to: email,
+                    subject: "welcome to ate!",
+                    // html,
+                });
+                res.status(201).send({ message: "Register Successfully" });
+            }
+            catch (err) {
+                console.log(err);
+                res.status(400).send(err);
+            }
+        });
+    }
+    loginPromotor(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            try {
+                const { name, password } = req.body;
+                const promotor = yield (0, promotor_service_1.findPromotorLogin)(name);
+                const isPasswordValid = yield (0, bcrypt_1.compare)(password, (_a = promotor === null || promotor === void 0 ? void 0 : promotor.password) !== null && _a !== void 0 ? _a : "");
+                console.log({ isPasswordValid });
+                if (!isPasswordValid)
+                    throw { message: "username atau password salah" };
+                if (!promotor)
+                    throw { message: "account not found!" };
+                const payload = { id: promotor.id, role: promotor };
+                const token = (0, jsonwebtoken_1.sign)(payload, process.env.JWT_KEY, { expiresIn: "7d" });
+                res.status(200).send({ token });
+            }
+            catch (err) {
+                console.log(err);
+                res.status(400).send(err);
+            }
+        });
+    }
+    verifyPromotor(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { token } = req.params;
+                const verified = (0, jsonwebtoken_1.verify)(token, process.env.JWT_KEY);
+                yield prisma_1.default.promotor.update({
+                    data: { isVerify: true },
+                    where: { id: verified.id },
+                });
+                res.status(200).send({ message: "verify sucessfully" });
+            }
+            catch (err) {
+                console.log(err);
+                res.status(400).send(err);
+            }
+        });
+    }
 }
 exports.AuthController = AuthController;

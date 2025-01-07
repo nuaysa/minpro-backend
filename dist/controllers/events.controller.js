@@ -20,11 +20,14 @@ class EventsController {
     getEvents(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let { search, category, location, page = 1, limit = 12 } = req.query;
+                let { search, category, location, page = 1, limit = 12, isActive } = req.query;
                 category = req.query.category || "all";
                 const filter = {};
                 if (search) {
                     filter.title = { contains: search, mode: "insensitive" };
+                }
+                if (isActive) {
+                    filter.isActive = true;
                 }
                 if (category !== "all") {
                     filter.category = { equals: category };
@@ -46,6 +49,12 @@ class EventsController {
                     take: +limit,
                     skip: +limit * (+page - 1),
                 });
+                if (new Date().getTime() === new Date(events[0].date).getTime() + 2 * 24 * 60 * 60 * 1000) {
+                    yield prisma_1.default.event.updateMany({
+                        where: { id: events[0].id },
+                        data: { isActive: false },
+                    });
+                }
                 res.status(200).send({ events });
             }
             catch (err) {
@@ -72,9 +81,27 @@ class EventsController {
                         thumbnail: true,
                         type: true,
                         slug: true,
+                        maps: true,
+                        Promotor: true,
+                        ticket: true,
                     },
                 });
                 res.status(200).send({ event });
+            }
+            catch (err) {
+                console.log(err);
+                res.status(400).send(err);
+            }
+        });
+    }
+    getTicketById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                const ticket = yield prisma_1.default.ticket.findUnique({
+                    where: { id: +id },
+                });
+                res.status(200).send({ ticket });
             }
             catch (err) {
                 console.log(err);
@@ -88,7 +115,7 @@ class EventsController {
                 if (!req.file)
                     throw { message: "thumbnail empty" };
                 const { secure_url } = yield (0, cloudinary_1.cloudinaryUpload)(req.file, "thumbnail");
-                const { title, description, category, date, time, location, type, venue, mapURL, promotorId, } = req.body;
+                const { title, description, category, date, time, location, type, venue, maps, promotorId } = req.body;
                 const slug = (0, slug_1.createSlug)(title);
                 const isPromotorExists = yield prisma_1.default.promotor.findUnique({
                     where: { id: +promotorId },
@@ -105,12 +132,12 @@ class EventsController {
                         time,
                         location,
                         venue,
-                        mapURL,
+                        maps,
                         type,
                         slug: slug,
                         thumbnail: secure_url,
-                        promotorId: +promotorId,
                         // promotorId: req.Promotor?.id!
+                        promotorId: +promotorId,
                     },
                 });
                 res.status(200).send({ message: "event created !" });
@@ -124,7 +151,7 @@ class EventsController {
     createTicket(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { price, category, discount, quota, startDate, endDate, isActive, Promotor, eventId, } = req.body;
+                const { price, category, discount, quota, startDate, endDate, isActive, Promotor, eventId } = req.body;
                 const status = new Date(endDate) > new Date() ? true : false;
                 const parsedStartDate = new Date(`${startDate}T00:00:00.000Z`);
                 const parsedEndDate = new Date(`${endDate}T23:59:59.000Z`);

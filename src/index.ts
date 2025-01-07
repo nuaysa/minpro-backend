@@ -3,11 +3,13 @@ import cors from "cors";
 import { EventsRouter } from "./routers/events.router";
 import cookieParser from "cookie-parser";
 import { AuthRouter } from "./routers/auth.router";
-import { UserRouter } from "./routers/user.router";
-import { PromotorRouter } from "./routers/promotor.router";  
-// import { verifikasiToken } from "./middlewares/verify";  
-// import { verifyRole } from "./middlewares/verify";  
+import { UserRouter } from "./routers/user.router";  
+import { verifikasiToken } from "./middlewares/verify";  
+import { verifyRole } from "./middlewares/verify";  
 import { TransactionRouter } from "./routers/transaction.router";
+import { PromotorRouter } from "./routers/promotor.router";
+import { ReviewsRouter } from "./routers/reviews.router";
+import { CallbackRouter } from "./routers/callback.router";
 
 const PORT: number = 8000;
 const app: Application = express();
@@ -29,15 +31,19 @@ app.get("/api", ( req : Request, res: Response ) => {
 const userRouter = new UserRouter();
 const eventsRouter = new EventsRouter();
 const authRouter = new AuthRouter();
-const promotorRouter = new PromotorRouter();  
 const transactionRouter = new TransactionRouter();
+const reviewRouter = new ReviewsRouter();
+const callbackRouter = new CallbackRouter()
+const promotorRouter = new PromotorRouter()
 
 
-app.use("/api/users", userRouter.getRouter());
-app.use("/api/events", eventsRouter.getRouter());
-app.use("/api/transaction", authRouter.getRouter());
 app.use("/api/auth", authRouter.getRouter());
+app.use("/api/users", userRouter.getRouter());
 app.use("/api/promotor", promotorRouter.getRouter());  // Menambahkan rute untuk promotor
+app.use("/api/events", eventsRouter.getRouter());
+app.use("/api/transaction", transactionRouter.getRouter());
+app.use("/api/review", reviewRouter.getRouter());
+app.use("/api/callback", callbackRouter.getRouter());
 
 app.post("/api", (req: Request, res: Response) => {
   res.send("POST request received");
