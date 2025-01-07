@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { Request, Response } from "express";
 import prisma from "../prisma";
+import { cloudinaryUpload } from "src/services/cloudinary";
 
 export class PromotorController {
   async getPromotor(req: Request, res: Response) {
@@ -24,54 +25,64 @@ export class PromotorController {
         skip: +limit * (+page - 1),
       });
 
-      res.status(200).send({ total_page, page, promotors })
+      res.status(200).send({ total_page, page, promotors });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
     }
   }
-  async getPromotorId(req: Request, res: Response){
+  async getPromotorId(req: Request, res: Response) {
     try {
-        const {id} = req.params
-    const promotor = await prisma.promotor.findUnique({ where: {id: +id}})
-    res.status(200).send({ promotor})
-
+      const { id } = req.params;
+      const promotor = await prisma.promotor.findUnique({ where: { id: +id } });
+      res.status(200).send({ promotor });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
-    } 
-    
+    }
   }
   async createPromotor(req: Request, res: Response) {
     try {
-        await prisma.promotor.create({ data: req.body});
-        res.status(201).send("Promotor account Created")
+      await prisma.promotor.create({ data: req.body });
+      res.status(201).send("Promotor account Created");
     } catch (err) {
-        console.log(err);
+      console.log(err);
       res.status(400).send(err);
     }
   }
-  async editPromotor ( req: Request, res: Response){
+  async editPromotor(req: Request, res: Response) {
     try {
+      const { id } = req.params;
+      await prisma.promotor.update({ data: req.body, where: { id: +id } });
+      res.status(200).send("promotor account updated");
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+  async deletePromotor(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      await prisma.promotor.delete({ where: { id: +id } });
+      res.status(200).send("promotor account Deleted");
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+//   async editAvatar(req: Request, res: Response){
+//     try {
+//       if (!req.file) throw { message:"file empty" }
+//       const { secure_url } = await cloudinaryUpload(req.file, "avatar")
 
-        const { id } = req.params
-        await prisma.promotor.update({data: req.body, where: {id: +id}})
-        res.status(200).send("promotor account updated")
-    } catch (err) {
-        console.log(err);
-      res.status(400).send(err);
-        
-    }
-  }
-  async deletePromotor (req: Request, res: Response){
-    try {
-        const { id } = req.params
-        await prisma.promotor.delete({ where: { id: +id}})
-        res.status(200).send("promotor account Deleted");
-    } catch (err) {
-        console.log(err);
-      res.status(400).send(err);
-        
-    }
-  }
-}
+//       await prisma.promotor.update({
+//         data: { avatar: secure_url},
+//         where: { id: req.promotor?.id},
+//       })
+//       res.status(200).send({ message: "avatar edited !"})
+//     } catch (err) {
+//       console.log(err);
+//       res.status(400).send(err);
+//     }
+//   }
+ }
