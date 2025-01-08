@@ -13,7 +13,50 @@ import handlebars from "handlebars";
 import { transportEmail } from "../services/mailer";
 import { findPromotor, findPromotorLogin } from "../services/promotor.service";
 
+const addPoint = async (referralUserId: number) => {
+  try {
+    const points = 10000;
+    const expirationDate = new Date(
+      new Date().setMonth(new Date().getMonth() + 3)
+    ); // 3 months from now
+
+    await prisma.userPoints.create({
+      data: {
+        userId: String(referralUserId),
+        points: points,
+        expiresAt: expirationDate,
+      },
+    });
+
+    console.log("Points successfully added to referral user.");
+  } catch (err) {
+    console.error("Error adding points:", err);
+    throw err;
+  }
+};
+
+const addVoucher = async (user_id: number) => {
+  try {
+    const expirationDate = new Date(
+      new Date().setMonth(new Date().getMonth() + 3)
+    ); // 3 months from now
+
+    await prisma.referralVoucher.create({
+      data: {
+        userId: String(user_id),
+        expiresAt: expirationDate,
+      },
+    });
+
+    console.log("Coupon successfully added to new user.");
+  } catch (err) {
+    console.error("Error adding coupon:", err);
+    throw err;
+  }
+};
+
 export class AuthController {
+
   async registerUser(req: Request, res: Response) {
     try {
       const { password, confirmPassword, username, email, reffered_by } =
