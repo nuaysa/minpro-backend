@@ -108,16 +108,16 @@ class AuthController {
     registerPromotor(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { password, confirmPassword, organisationName, email } = req.body;
+                const { password, confirmPassword, organizationName, email } = req.body;
                 if (password != confirmPassword)
                     throw { message: "Password not match!" };
-                const promotors = yield (0, promotor_service_1.findPromotor)(organisationName, email);
+                const promotors = yield (0, promotor_service_1.findPromotor)(organizationName, email);
                 if (promotors)
                     throw { message: "organization or email has been used" };
                 const salt = yield (0, bcrypt_1.genSalt)(8);
                 const hashPassword = yield (0, bcrypt_1.hash)(password, salt);
                 const newPromotor = yield prisma_1.default.promotor.create({
-                    data: { name: organisationName, email, password: hashPassword },
+                    data: { name: organizationName, email, password: hashPassword },
                 });
                 const payload = { id: newPromotor.id, role: newPromotor };
                 const token = (0, jsonwebtoken_1.sign)(payload, process.env.JWT_KEY, { expiresIn: "7d" });
@@ -125,12 +125,12 @@ class AuthController {
                 const templatePath = path_1.default.join(__dirname, "../templates", "verify.hbs");
                 const templateSource = fs_1.default.readFileSync(templatePath, "utf-8");
                 const compiledTemplate = handlebars_1.default.compile(templateSource);
-                const html = compiledTemplate({ organisationName, link });
+                const html = compiledTemplate({ organizationName, link });
                 yield mailer_1.transportEmail.sendMail({
                     from: "suciclarissatiara@gmail.com",
                     to: email,
                     subject: "welcome to ate!",
-                    // html,
+                    html,
                 });
                 res.status(201).send({ message: "Register Successfully" });
             }
