@@ -18,7 +18,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.BASE_URL_FE_DEV,
+    origin: process.env.BASE_URL_FE,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
@@ -37,6 +37,7 @@ const reviewRouter = new ReviewsRouter();
 const callbackRouter = new CallbackRouter()
 const promotorRouter = new PromotorRouter()
 const TesRouter = new tesRouter()
+
 
 
 app.use("/api/tes",TesRouter.getRouter())

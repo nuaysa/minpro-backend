@@ -76,8 +76,7 @@ class AuthController {
                     throw { message: "Username atau password salah" };
                 if (!user)
                     throw { message: "Account not found!" };
-                if (user.isVerify)
-                    throw { message: "account not verify" };
+                // if (user.isVerify) throw { message: "account not verify" };
                 const payload = { id: user.id, role: user };
                 const token = (0, jsonwebtoken_1.sign)(payload, process.env.JWT_KEY, { expiresIn: "7d" });
                 res.status(200).send({ token });

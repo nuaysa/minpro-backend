@@ -27,7 +27,9 @@ export class EventsController {
         filter.location = { equals: location as Location };
       }
 
-      const countEvents = await prisma.user.aggregate({ _count: { _all: true } });
+      const countEvents = await prisma.user.aggregate({
+        _count: { _all: true },
+      });
       const totalPage = Math.ceil(countEvents._count._all / +limit);
 
 

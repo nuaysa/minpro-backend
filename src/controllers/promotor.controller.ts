@@ -85,4 +85,3 @@ export class PromotorController {
 //       res.status(400).send(err);
 //     }
 //   }
- }
