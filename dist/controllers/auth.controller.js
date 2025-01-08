@@ -22,6 +22,40 @@ const fs_1 = __importDefault(require("fs"));
 const handlebars_1 = __importDefault(require("handlebars"));
 const mailer_1 = require("../services/mailer");
 const promotor_service_1 = require("../services/promotor.service");
+const addPoint = (referralUserId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const points = 10000;
+        const expirationDate = new Date(new Date().setMonth(new Date().getMonth() + 3)); // 3 months from now
+        yield prisma_1.default.userPoints.create({
+            data: {
+                userId: String(referralUserId),
+                points: points,
+                expiresAt: expirationDate,
+            },
+        });
+        console.log("Points successfully added to referral user.");
+    }
+    catch (err) {
+        console.error("Error adding points:", err);
+        throw err;
+    }
+});
+const addVoucher = (user_id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const expirationDate = new Date(new Date().setMonth(new Date().getMonth() + 3)); // 3 months from now
+        yield prisma_1.default.referralVoucher.create({
+            data: {
+                userId: String(user_id),
+                expiresAt: expirationDate,
+            },
+        });
+        console.log("Coupon successfully added to new user.");
+    }
+    catch (err) {
+        console.error("Error adding coupon:", err);
+        throw err;
+    }
+});
 class AuthController {
     registerUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
