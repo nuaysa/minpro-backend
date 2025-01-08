@@ -8,8 +8,8 @@ export class TransactionController {
     try {
       const { userVoucher, userPoints, qty } = req.body;
       const { ticketId } = req.params;
-      const userId = req.user?.id.toString();
-
+      // const userId = req.user?.id.toString();
+      const userId = "fb1e3e9f-2a57-40fa-b065-686ba279c846"
       // if (`userId = ${!userId}`) {
       //   res.status(400).send({ message: "User ID is required" });
       // }
