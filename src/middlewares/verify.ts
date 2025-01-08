@@ -16,6 +16,7 @@ export const verifikasiToken = async (
     const verified = verify(token, process.env.JWT_KEY!)
     console.log(verified);
         req.user = verified as UserPayload;
+        req.Promotor = verified as PromotorPayload
 
     next();
   } catch (err) {

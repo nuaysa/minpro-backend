@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TransactionController = void 0;
 const prisma_1 = __importDefault(require("../prisma"));
 const axios_1 = __importDefault(require("axios"));
-<<<<<<< HEAD
 class TransactionController {
     createOrder(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -84,24 +83,19 @@ class TransactionController {
                     });
                 }
                 res.status(200).send({ message: "Order updated" });
-=======
-// import Midtrans from "midtrans-client"
-// let snap = new Midtrans.Snap({
-//   isProduction: false,
-//   serverKey: process.env.SERVER,
-//   clientKey: process.env.NEXT_PUBLIC_CLIENT,
-// })
+
 class TransactionController {
     createOrder(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             try {
-                const { id, userVoucher, userPoints, qty } = req.body;
+                const { userVoucher, userPoints, qty } = req.body;
                 const { ticketId } = req.params;
-                const userId = "9269bda0-b0ef-40ac-aea2-21a6dd5462c8";
-                // const userId = req.user?.id?.toString();
-                // if (!userId) {
+                const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id.toString();
+                // if (`userId = ${!userId}`) {
                 //   res.status(400).send({ message: "User ID is required" });
                 // }
+                console.log(userId);
                 var discount = 0;
                 const expiredAt = new Date(new Date().getTime() + 10 * 60 * 1000);
                 const ticket = yield prisma_1.default.ticket.findUnique({
@@ -157,8 +151,9 @@ class TransactionController {
                                     },
                                     data: { points: userPoints - discount <= 0 ? 0 : userPoints - discount },
                                 });
-                                yield prisma_1.default.transaction.update({ where: { id: id }, data: { promoQuota: -1 } });
+                                // await prisma.transaction.update({ where: { id: id }, data: { promoQuota: -1 } });
                             }
+                            discount += discountPoints;
                         }
                         if (userVoucher) {
                             const voucherData = yield prisma_1.default.referralVoucher.findUnique({
@@ -173,19 +168,22 @@ class TransactionController {
                                 data: { isValid: false },
                             });
                         }
-                        yield prisma_1.default.transaction.update({ where: { id: id }, data: { promoQuota: -1 } });
+                        // await prisma.transaction.update({ where: { id: id }, data: { promoQuota: -1 } });
                         discountVoucher = (10 / 100) * (discountPoints ? TotalPrice - discountPoints : TotalPrice);
                         discount = discountPoints + discountVoucher;
-                        return res.status(200).send({ message: "Discount applied successfully" });
+                        return discount;
                     });
+                }
+                if (userVoucher || userPoints) {
+                    promo();
                 }
                 const FinalPrice = TotalPrice - (discount ? discount : 0);
                 const order = yield prisma_1.default.transaction.create({
-                    data: { id, basePrice: basePrice, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId: userId === null || userId === void 0 ? void 0 : userId.toString() },
+                    data: { basePrice: basePrice, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId: userId },
                 });
                 const body = {
                     transaction_details: {
-                        order_id: order.id,
+                        order_id: `invoice ${formatId(order.id)}`,
                         gross_amount: order.finalPrice,
                     },
                     expiry: {
@@ -218,41 +216,6 @@ class TransactionController {
             }
         });
     }
-    // async createDetail(req: Request, res: Response) {
-    //   try {
-    //     const { transactionId } = req.params;
-    //     const transaction = await prisma.transaction.findUnique({
-    //       where: { id: +transactionId },
-    //       select: { id: true, status: true, userId: true, ticketId: true },
-    //     });
-    //     const ticket = await prisma.ticket.findFirst({
-    //       where: { id: transaction?.ticketId },
-    //       select: { eventId: true },
-    //     });
-    //     const event = await prisma.event.findFirst({
-    //       where: { id: ticket?.eventId },
-    //       select: { id: true },
-    //     });
-    //     if (!transaction || transaction.status !== "Paid") {
-    //         res.status(400).send({ message: "Invalid or unpaid transaction" });
-    //     }
-    //     if (transaction?.userId !== req.user?.id.toString()) {
-    //         res.status(403).send({ message: "Unauthorized access to this transaction" });
-    //     }
-    //     const detail = await prisma.detailTransaction.create({
-    //       data: {
-    //         transactionId: transaction?.id!,
-    //         ticketId: transaction?.ticketId!,
-    //         eventId: ticket?.eventId!,
-    //         reviewStatus: false,
-    //       },
-    //     });
-    //     res.status(200).send({ detail });
-    //   } catch (err) {
-    //     console.error(err);
-    //     res.status(500).send({ message: "An error occurred", error: err });
-    //   }
-    // }
     getDetail(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
@@ -271,8 +234,7 @@ class TransactionController {
                         event: true,
                     },
                 });
-                res.status(200).send({ detail });
->>>>>>> 9fea61b0863a87513be1940f98a7022b1d829e10
+                res.status(200).send({ detail })
             }
             catch (err) {
                 console.log(err);

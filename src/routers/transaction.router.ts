@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { TransactionController } from "../controllers/transaction.controller";
-import { verifikasiToken } from "src/middlewares/verify";
+import { verifikasiToken } from "../middlewares/verify";
 
 export class TransactionRouter {
     private router: Router;
@@ -13,7 +13,7 @@ export class TransactionRouter {
     }
 
     private initializeRoutes(){
-        this.router.post("/:ticketId", this.transactionController.createOrder)
+        this.router.post("/:ticketId", verifikasiToken, this.transactionController.createOrder)
         // this.router.post("/detail/:transactionId", this.transactionController.createDetail)
         // this.router.post("/:ticketId", this.transactionController.createOrder)
         this.router.get("/detail", this.transactionController.getDetail)

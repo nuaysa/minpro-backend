@@ -6,13 +6,15 @@ import axios from "axios";
 export class TransactionController {
   async createOrder(req: Request, res: Response) {
     try {
-      const { id, userVoucher, userPoints, qty } = req.body;
+      const { userVoucher, userPoints, qty } = req.body;
       const { ticketId } = req.params;
-      const userId = req.user?.id?.toString();
-      if (!userId) {
-        res.status(400).send({ message: "User ID is required" });
-      }
+      const userId = req.user?.id.toString();
 
+      // if (`userId = ${!userId}`) {
+      //   res.status(400).send({ message: "User ID is required" });
+      // }
+
+      console.log(userId)
       var discount: number = 0;
       const expiredAt = new Date(new Date().getTime() + 10 * 60 * 1000);
 
@@ -80,8 +82,9 @@ export class TransactionController {
               },
               data: { points: userPoints - discount <= 0 ? 0 : userPoints - discount },
             });
-            await prisma.transaction.update({ where: { id: id }, data: { promoQuota: -1 } });
+            // await prisma.transaction.update({ where: { id: id }, data: { promoQuota: -1 } });
           }
+          discount += discountPoints
         }
 
         if (userVoucher) {
@@ -99,18 +102,20 @@ export class TransactionController {
             data: { isValid: false },
           });
         }
-        await prisma.transaction.update({ where: { id: id }, data: { promoQuota: -1 } });
+        // await prisma.transaction.update({ where: { id: id }, data: { promoQuota: -1 } });
 
         discountVoucher = (10 / 100) * (discountPoints ? TotalPrice - discountPoints : TotalPrice);
 
         discount = discountPoints + discountVoucher;
-        return res.status(200).send({ message: "Discount applied successfully" });
+        return discount
       }
-
+      if(userVoucher || userPoints){
+        promo()
+      }
       const FinalPrice = TotalPrice - (discount ? discount : 0);
 
       const order = await prisma.transaction.create({
-        data: { id, basePrice: basePrice!, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId: userId?.toString()!},
+        data: { basePrice: basePrice!, userVoucher, userPoints, discount, qty, totalPrice: TotalPrice, finalPrice: FinalPrice, ticketId: +ticketId, expiresAt: expiredAt, userId: userId!},
       });
 
       const body = {

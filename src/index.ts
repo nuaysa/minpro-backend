@@ -10,6 +10,7 @@ import { TransactionRouter } from "./routers/transaction.router";
 import { PromotorRouter} from "./routers/promotor.router";
 import { ReviewsRouter } from "./routers/reviews.router";
 import { CallbackRouter } from "./routers/callback.router";
+import { tesRouter } from "./routers/tes.router";
 
 const PORT: number = 8000;
 const app: Application = express();
@@ -35,8 +36,11 @@ const transactionRouter = new TransactionRouter();
 const reviewRouter = new ReviewsRouter();
 const callbackRouter = new CallbackRouter()
 const promotorRouter = new PromotorRouter()
+const TesRouter = new tesRouter()
 
 
+
+app.use("/api/tes",TesRouter.getRouter())
 app.use("/api/auth", authRouter.getRouter());
 app.use("/api/users", userRouter.getRouter());
 app.use("/api/promotor", promotorRouter.getRouter());

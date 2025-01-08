@@ -18,9 +18,10 @@ const verifikasiToken = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
         console.log(token);
         if (!token)
             throw { message: "Unauthorize!" };
-        const verified = (0, jsonwebtoken_1.verify)(token, "shhhhh");
+        const verified = (0, jsonwebtoken_1.verify)(token, process.env.JWT_KEY);
         console.log(verified);
         req.user = verified;
+        req.Promotor = verified;
         next();
     }
     catch (err) {
