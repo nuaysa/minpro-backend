@@ -165,7 +165,7 @@ class TransactionController {
                         event: true,
                     },
                 });
-                res.status(200).send({ detail });
+                res.status(200).send({ detail })
             }
             catch (err) {
                 console.log(err);

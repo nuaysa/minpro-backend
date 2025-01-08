@@ -271,7 +271,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\Data Aysa\\Data JCWD-0508\\minpro Backend\\minpro-prisma\\prisma\\generated\\client",
+      "value": "C:\\Users\\HP\\minpro-backend\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -285,7 +285,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\Data Aysa\\Data JCWD-0508\\minpro Backend\\minpro-prisma\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\HP\\minpro-backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

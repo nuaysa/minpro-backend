@@ -28,9 +28,9 @@ const findPromotorLogin = (organizationName) => __awaiter(void 0, void 0, void 0
     return promotor;
 });
 exports.findPromotorLogin = findPromotorLogin;
-const findPromotorByCredentials = (organisationName, password) => __awaiter(void 0, void 0, void 0, function* () {
+const findPromotorByCredentials = (organizationName, password) => __awaiter(void 0, void 0, void 0, function* () {
     const promotor = yield prisma_1.default.promotor.findFirst({
-        where: { AND: [{ name: organisationName }, { password: password }] },
+        where: { AND: [{ name: organizationName }, { password: password }] },
     });
     return promotor;
 });
