@@ -17,11 +17,14 @@ const tes_router_1 = require("./routers/tes.router");
 const PORT = 8000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({
-    origin: process.env.BASE_URL_FE_DEV,
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-}));
+// app.use(
+//   cors({
+//     origin: process.env.BASE_URL_FE_DEV,
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+//   })
+// );
+app.use((0, cors_1.default)());
 app.use((0, cookie_parser_1.default)());
 app.get("/api", (req, res) => {
     res.status(200).send("if this text appear, your API is tunning");

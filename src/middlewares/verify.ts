@@ -17,7 +17,6 @@ export const verifikasiToken = async (
     console.log(verified);
         req.user = verified as UserPayload;
         req.Promotor = verified as PromotorPayload
-
     next();
   } catch (err) {
     console.log(err);
