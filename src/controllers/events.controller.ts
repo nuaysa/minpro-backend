@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import prisma from "../prisma";
 import { cloudinaryUpload } from "../services/cloudinary";
 import { createSlug } from "../helpers/slug";
+import formatTime from "../helpers/timeformat";
 
 export class EventsController {
   async getEvents(req: Request, res: Response) {
@@ -118,7 +119,7 @@ export class EventsController {
           description,
           category,
           date: new Date(date),
-          time: new Date(time),
+          time: formatTime(time),
           location,
           venue,
           maps,
@@ -126,6 +127,7 @@ export class EventsController {
           slug: slug,
           thumbnail: secure_url,
           promotorId: req.promotor?.id!
+          // promotorId: 22
         },
       });
       res.status(200).send({ message: "event created !", data: {id: data.id} });
@@ -149,7 +151,8 @@ export class EventsController {
           endDate: new Date(endDate),
           category: category,
           isActive: status,
-          promotorId: req.promotor?.id!,
+          promotorId: 22,
+          // promotorId: req.promotor?.id!,
           eventId: +eventId
         },
       });
